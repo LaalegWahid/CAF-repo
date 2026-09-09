@@ -1,6 +1,34 @@
 /* ------------------------------------------------------------------
+   Fonts — self-hosted variable fonts (Fontsource, latin subset).
+   Fraunces gives the headings an editorial, distinctly "cabinet"
+   voice; Inter keeps the running text neutral and legible.
+------------------------------------------------------------------ */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "InterVariable";
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------
    Design tokens — colours sampled from the logo (bright blue mosaic
-   globe fading to grey) plus a dark ink for text.
+   globe fading to grey) plus a dark ink for text and a warm sand
+   accent that keeps the palette from being "just blue".
 ------------------------------------------------------------------ */
 :root {
   --brand-050: #e9f6fd;
@@ -10,6 +38,12 @@
   --brand-500: #1a9dd9; /* primary */
   --brand-600: #1180b7;
   --brand-700: #0c6491;
+
+  --accent-050: #faf4ea;
+  --accent-300: #e0b781;
+  --accent-500: #c8863b; /* warm sand — used sparingly */
+  --accent-600: #a96f2b;
+  --accent-ink: #6b4519;
 
   --grey-200: #dfe4e8;
   --grey-300: #c3c9cf;
@@ -32,8 +66,24 @@
   --radius: 14px;
   --radius-sm: 10px;
   --maxw: 1140px;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Noto Sans", sans-serif;
+  --font: "InterVariable", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-head: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino,
+    Georgia, "Times New Roman", serif;
+}
+
+/* Shared brand device: a small rotated square echoing the logo mosaic. */
+.diamond,
+.eyebrow::before,
+.hero__trust li::before,
+.panel-dark li::before {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-500);
+  transform: rotate(45deg);
 }
 
 /* ------------------------------------------------------------------
@@ -81,24 +131,32 @@ h1,
 h2,
 h3,
 h4 {
+  font-family: var(--font-head);
   color: var(--ink-900);
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0 0 0.5em;
-  font-weight: 700;
+  font-weight: 600;
+  font-optical-sizing: auto;
 }
 h1 {
-  font-size: clamp(2rem, 4vw + 1rem, 3.15rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(2.1rem, 4vw + 1rem, 3.25rem);
+  letter-spacing: -0.015em;
 }
 h2 {
-  font-size: clamp(1.5rem, 2vw + 1rem, 2.2rem);
+  font-size: clamp(1.6rem, 2vw + 1rem, 2.35rem);
   letter-spacing: -0.01em;
 }
 h3 {
-  font-size: 1.18rem;
+  font-size: 1.2rem;
+  letter-spacing: -0.005em;
 }
 p {
   margin: 0 0 1rem;
+}
+
+::selection {
+  background: var(--brand-200);
+  color: var(--ink-900);
 }
 
 :focus-visible {
@@ -147,13 +205,23 @@ p {
 }
 
 .eyebrow {
-  display: inline-block;
-  margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+  font-family: var(--font);
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand-600);
+  color: var(--ink-700);
+}
+.eyebrow::before {
+  width: 7px;
+  height: 7px;
+}
+.section__head--center .eyebrow {
+  justify-content: center;
 }
 
 .lead {
@@ -247,9 +315,14 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-weight: 700;
   color: var(--ink-900);
-  font-size: 1.05rem;
+}
+.brand > span {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
 }
 .brand:hover {
   text-decoration: none;
@@ -260,10 +333,11 @@ p {
 }
 .brand small {
   display: block;
+  font-family: var(--font);
   font-weight: 500;
   font-size: 0.72rem;
   color: var(--ink-500);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
 .nav-wrap {
@@ -348,7 +422,21 @@ p {
   background: linear-gradient(180deg, var(--brand-050), var(--surface) 70%);
   border-bottom: 1px solid var(--border);
 }
+/* faint mosaic-of-diamonds watermark echoing the logo */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Crect x='15' y='15' width='8' height='8' fill='%231a9dd9' transform='rotate(45 19 19)'/%3E%3C/svg%3E");
+  background-size: 38px 38px;
+  opacity: 0.06;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 65%);
+  mask-image: linear-gradient(180deg, #000, transparent 65%);
+  pointer-events: none;
+}
 .hero__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 3rem;
@@ -368,22 +456,28 @@ p {
   gap: 0.9rem;
 }
 .hero__trust {
-  margin-top: 2rem;
+  margin: 2rem 0 0;
   padding-top: 1.5rem;
   border-top: 1px dashed var(--grey-300);
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem 2rem;
+  gap: 0.75rem 1.75rem;
   font-size: 0.9rem;
   color: var(--ink-500);
 }
-.hero__trust span {
+.hero__trust li {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.55rem;
+}
+.hero__trust li::before {
+  width: 6px;
+  height: 6px;
 }
 .hero__trust strong {
   color: var(--ink-900);
+  font-weight: 600;
 }
 
 /* hero photo, framed with a brand-blue offset accent */
@@ -442,6 +536,42 @@ p {
 }
 
 /* ------------------------------------------------------------------
+   Stats band — "le cabinet en chiffres" under the hero
+------------------------------------------------------------------ */
+.stats {
+  padding-block: clamp(2rem, 4vw, 3.25rem);
+}
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+}
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent-300);
+}
+.stats__value {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 1.4vw + 1rem, 2.1rem);
+  line-height: 1.1;
+  color: var(--ink-900);
+}
+.stats__label {
+  font-size: 0.9rem;
+  color: var(--ink-500);
+}
+@media (max-width: 720px) {
+  .stats__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------
    Cards / grids
 ------------------------------------------------------------------ */
 .grid {
@@ -480,18 +610,21 @@ p {
   color: var(--ink-500);
 }
 .card__icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--brand-050);
+  border: 1px solid var(--brand-100);
   color: var(--brand-600);
-  margin-bottom: 0.4rem;
+  transform: rotate(45deg);
+  margin: 0.35rem 0 0.9rem 0.35rem;
 }
 .card__icon svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
+  transform: rotate(-45deg);
 }
 .card__link {
   margin-top: auto;
@@ -539,6 +672,9 @@ p {
 .panel-dark .eyebrow {
   color: var(--brand-200);
 }
+.panel-dark .eyebrow::before {
+  background: var(--brand-400);
+}
 .panel-dark ul {
   margin: 1.5rem 0 0;
   padding: 0;
@@ -557,16 +693,15 @@ p {
 }
 .panel-dark li {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.75rem;
   align-items: flex-start;
   font-size: 0.98rem;
 }
-.panel-dark li svg {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
-  color: var(--brand-400);
+.panel-dark li::before {
+  width: 8px;
+  height: 8px;
+  margin-top: 7px;
+  background: var(--brand-400);
 }
 .panel-dark .hero__cta {
   margin-top: 1.75rem;
@@ -652,9 +787,11 @@ p {
   margin: 0 0 1.25rem;
   padding: 0;
   border: 0;
-  font-size: clamp(1.1rem, 1.4vw + 0.7rem, 1.4rem);
-  line-height: 1.5;
-  font-weight: 600;
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.4vw + 0.7rem, 1.45rem);
+  line-height: 1.45;
+  font-weight: 500;
   color: var(--ink-900);
 }
 .founder__name {

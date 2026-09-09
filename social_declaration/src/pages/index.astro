@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE, SERVICES, GUIDES, FAQ } from "../consts";
+import { SITE, STATS, SERVICES, GUIDES, FAQ } from "../consts";
 
 const pageTitle = `${SITE.tagline} · ${SITE.name}`;
 const addr = SITE.address;
@@ -103,11 +103,11 @@ const serviceIcons: Record<number, string> = {
             <a class="btn btn--primary" href="#contact">Demander un devis</a>
             <a class="btn btn--ghost" href="#services">Voir nos services</a>
           </div>
-          <div class="hero__trust">
-            <span><strong>Damancom</strong> &amp; télédéclarations CNSS</span>
-            <span>Conformité <strong>Code du travail</strong></span>
-            <span>Interlocuteur <strong>dédié</strong></span>
-          </div>
+          <ul class="hero__trust">
+            <li>Télédéclarations <strong>Damancom</strong> — CNSS, AMO, IR</li>
+            <li>Conformité <strong>Code du travail</strong> marocain</li>
+            <li>Expert-comptable &amp; <strong>commissaire aux comptes</strong></li>
+          </ul>
         </div>
         <div class="hero__media">
           <figure class="hero__figure">
@@ -122,6 +122,20 @@ const serviceIcons: Record<number, string> = {
             />
           </figure>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= LE CABINET EN CHIFFRES ================= -->
+    <section class="section stats" aria-label="Le cabinet en chiffres">
+      <div class="container stats__grid">
+        {
+          STATS.map((s) => (
+            <div class="stats__item">
+              <span class="stats__value">{s.value}</span>
+              <span class="stats__label">{s.label}</span>
+            </div>
+          ))
+        }
       </div>
     </section>
 
@@ -207,16 +221,13 @@ const serviceIcons: Record<number, string> = {
             </p>
             <ul>
               <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-                Sociétés soumises à l'obligation de CAC (SA, seuils dépassés)
+Sociétés soumises à l'obligation de CAC (SA, seuils dépassés)
               </li>
               <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-                Groupes et filiales avec comptes consolidés
+Groupes et filiales avec comptes consolidés
               </li>
               <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-                Conseils d'administration et actionnaires
+Conseils d'administration et actionnaires
               </li>
             </ul>
             <div class="hero__cta">

@@ -10,7 +10,7 @@ export const SITE = {
   tagline: "Paie, déclarations sociales & audit légal au Maroc",
   description:
     "Cabinet au Maroc spécialisé en gestion de la paie (CNSS, AMO, IR), administration du personnel, contrats de travail, audit social et commissariat aux comptes.",
-  ogImage: "/og.svg",
+  ogImage: "/og.png",
   locale: "fr_MA",
   lang: "fr",
   email: "contact@cabinet-caf.ma",
@@ -25,6 +25,17 @@ export const SITE = {
     countryName: "Maroc",
   },
 } as const;
+
+/**
+ * Le cabinet en chiffres — bandeau de preuve sous le hero.
+ * Chiffres indicatifs : à confirmer par le cabinet avant mise en ligne.
+ */
+export const STATS = [
+  { value: "+120", label: "entreprises accompagnées au Maroc" },
+  { value: "8 ans", label: "d'expertise sociale & d'audit légal" },
+  { value: "100 %", label: "télédéclarations via Damancom" },
+  { value: "24 h", label: "délai de réponse en jours ouvrés" },
+] as const;
 
 /** Prestations principales — cartes "Services". */
 export const SERVICES = [
