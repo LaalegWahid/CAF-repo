@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap. Only pages that currently exist are listed so crawlers
+  are not sent to 404s. Add the <url> entries below as the service and
+  resource pages go live, or replace this file with @astrojs/sitemap
+  (`npx astro add sitemap`) for automatic generation.
+
+  Pending pages:
+    /services/gestion-paie-declarations-sociales
+    /services/gestion-rh-administration-personnel
+    /services/contrats-conventions
+    /services/audit-social
+    /ressources/calcul-paie-cnss-amo-ir
+    /ressources/smig-baremes
+    /ressources/rediger-cdi-cdd
+    /ressources/reglement-interieur-obligatoire
+    /ressources/preparer-controle-cnss
+    /ressources/solde-de-tout-compte
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.cabinet-caf.ma/</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.cabinet-caf.ma/mentions-legales</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+</urlset>

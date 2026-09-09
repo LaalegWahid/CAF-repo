@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../consts";
+const addr = SITE.address;
+---
+
+<Layout
+  title="Mentions légales"
+  description={`Mentions légales du site ${SITE.legalName}.`}
+  path="/mentions-legales"
+  noindex={true}
+>
+  <Header />
+  <main id="main" class="section">
+    <div class="container" style="max-width:760px">
+      <h1>Mentions légales</h1>
+      <p>
+        Ce site est édité par <strong>{SITE.legalName}</strong>, cabinet
+        d'expertise sociale et d'audit établi à {addr.locality}, {addr.countryName}.
+      </p>
+      <h2>Éditeur</h2>
+      <p>
+        {SITE.legalName}<br />
+        {addr.street}, {addr.postalCode} {addr.locality}<br />
+        Téléphone : <a href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a><br />
+        E-mail : <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+      <h2>Hébergement</h2>
+      <p>À compléter avec les informations de votre hébergeur.</p>
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus de ce site est protégé. Toute reproduction sans
+        autorisation préalable est interdite.
+      </p>
+      <p><a href="/">&larr; Retour à l'accueil</a></p>
+    </div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,58 @@
+---
+import { SITE, SERVICES, GUIDES } from "../consts";
+const year = new Date().getFullYear();
+const addr = SITE.address;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/Logo_128x128.png" alt={`Logo ${SITE.name}`} width="38" height="38" />
+        <p><strong style="color:#fff">{SITE.legalName}</strong></p>
+        <p>{SITE.description}</p>
+        <p>
+          <a href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a><br />
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </p>
+        <address style="font-style:normal">
+          {addr.street}<br />
+          {addr.postalCode} {addr.locality}, {addr.countryName}
+        </address>
+      </div>
+
+      <nav aria-label="Services">
+        <h4>Services</h4>
+        <ul>
+          {SERVICES.map((s) => (
+            <li><a href={s.href}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Ressources">
+        <h4>Ressources</h4>
+        <ul>
+          {GUIDES.map((g) => (
+            <li><a href={g.href}>{g.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Cabinet">
+        <h4>Cabinet</h4>
+        <ul>
+          <li><a href="/#audit-legal">Audit légal &amp; CAC</a></li>
+          <li><a href="/#faq">Questions fréquentes</a></li>
+          <li><a href="/#contact">Contact &amp; devis</a></li>
+          <li><a href="/mentions-legales">Mentions légales</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {year} {SITE.legalName}. Tous droits réservés.</span>
+      <span>Casablanca &middot; Maroc</span>
+    </div>
+  </div>
+</footer>

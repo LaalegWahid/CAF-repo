@@ -1,0 +1,279 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE, SERVICES, GUIDES, FAQ } from "../consts";
+
+const pageTitle = `${SITE.tagline} · ${SITE.name}`;
+const addr = SITE.address;
+
+/* ---------- Structured data (JSON-LD) ---------- */
+const orgId = `${SITE.url}/#organization`;
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "@id": orgId,
+  name: SITE.legalName,
+  alternateName: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/Logo_128x128.png`,
+  image: `${SITE.url}/Logo_128x128.png`,
+  description: SITE.description,
+  email: SITE.email,
+  telephone: SITE.phoneE164,
+  priceRange: "$$",
+  knowsLanguage: ["fr", "ar"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: addr.street,
+    addressLocality: addr.locality,
+    addressRegion: addr.region,
+    postalCode: addr.postalCode,
+    addressCountry: addr.country,
+  },
+  areaServed: { "@type": "Country", name: addr.countryName },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Prestations",
+    itemListElement: [
+      ...SERVICES.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, url: `${SITE.url}${s.href}` },
+      })),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Audit légal & commissariat aux comptes",
+          url: `${SITE.url}/#audit-legal`,
+        },
+      },
+    ],
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  inLanguage: "fr-MA",
+  publisher: { "@id": orgId },
+};
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const jsonLd = [organization, website, faqPage];
+
+const serviceIcons: Record<number, string> = {
+  22: `<path d="M3 10h18M7 15h4M3 6h18v12H3z"/>`,
+  23: `<circle cx="9" cy="8" r="3"/><path d="M15 11a3 3 0 1 0 0-6M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1M17 15a5 5 0 0 1 5 5v1"/>`,
+  24: `<path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2M9 3h6v3H9zM9 12h6M9 16h4"/>`,
+  20: `<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>`,
+};
+---
+
+<Layout title={pageTitle} path="/" jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__body">
+          <p class="eyebrow">Cabinet social &amp; audit — Maroc</p>
+          <h1>Paie, déclarations sociales et audit légal, en toute conformité</h1>
+          <p class="lead">
+            Nous prenons en charge la gestion de la paie (CNSS, AMO, IR),
+            l'administration du personnel, vos contrats de travail et l'audit
+            social. Jusqu'au commissariat aux comptes pour les sociétés soumises
+            au CAC.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Demander un devis</a>
+            <a class="btn btn--ghost" href="#services">Voir nos services</a>
+          </div>
+          <div class="hero__trust">
+            <span><strong>Damancom</strong> &amp; télédéclarations CNSS</span>
+            <span>Conformité <strong>Code du travail</strong></span>
+            <span>Interlocuteur <strong>dédié</strong></span>
+          </div>
+        </div>
+        <div class="hero__media">
+          <figure class="hero__figure">
+            <img
+              src="/images/hero-conseil-paie.webp"
+              alt="Conseillère du cabinet CAF analysant un bulletin de paie et un tableur CNSS dans un bureau à Casablanca"
+              width="1024"
+              height="1271"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Nos services</p>
+          <h2>Un pôle social complet pour votre entreprise</h2>
+          <p class="lead">
+            De la production des bulletins de paie à la sécurisation juridique de
+            vos contrats, chaque mission est menée par des spécialistes de la
+            réglementation sociale marocaine.
+          </p>
+        </div>
+        <figure class="section__figure">
+          <img
+            src="/images/equipe-cabinet-social.webp"
+            alt="Équipe de consultants paie et déclarations sociales du cabinet CAF réunie autour d'un dossier client"
+            width="1600"
+            height="893"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="grid grid--2">
+          {
+            SERVICES.map((s) => (
+              <article class="card">
+                <span class="card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[s.id]} />
+                </span>
+                <h3>
+                  <a class="stretched" href={s.href}>{s.title}</a>
+                </h3>
+                <p>{s.desc}</p>
+                <span class="card__link">En savoir plus &rarr;</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESSOURCES / GUIDES ================= -->
+    <section class="section" id="ressources">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Ressources</p>
+          <h2>Guides pratiques de la paie et du droit social</h2>
+          <p class="lead">
+            Des repères clairs sur les questions qui reviennent le plus souvent
+            dans les entreprises marocaines.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          {
+            GUIDES.map((g) => (
+              <article class="card guide">
+                <h3>
+                  <a class="stretched" href={g.href}>{g.title}</a>
+                </h3>
+                <p>{g.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AUDIT LÉGAL & CAC ================= -->
+    <section class="section section--alt" id="audit-legal">
+      <div class="container">
+        <div class="panel-dark">
+          <div class="panel-dark__body">
+            <p class="eyebrow">05 — Audit légal</p>
+            <h2>Audit légal &amp; commissariat aux comptes</h2>
+            <p>
+              Certification des comptes annuels, rapport général et rapports
+              spéciaux, examen des conventions réglementées et vérifications
+              prévues par la loi. Une mission conduite avec indépendance pour
+              sécuriser vos assemblées et rassurer vos partenaires.
+            </p>
+            <ul>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                Sociétés soumises à l'obligation de CAC (SA, seuils dépassés)
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                Groupes et filiales avec comptes consolidés
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                Conseils d'administration et actionnaires
+              </li>
+            </ul>
+            <div class="hero__cta">
+              <a class="btn btn--light" href="#contact">Trouver un commissaire aux comptes</a>
+              <a class="btn btn--outline-light" href="#contact">Faire auditer mes comptes</a>
+            </div>
+          </div>
+          <figure class="panel-dark__figure">
+            <img
+              src="/images/audit-legal-commissariat.webp"
+              alt="Commissaires aux comptes examinant les états financiers annuels d'une société lors d'une mission d'audit légal"
+              width="1200"
+              height="896"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Ce que les entreprises nous demandent le plus</h2>
+        </div>
+        <div class="faq">
+          {
+            FAQ.map((f, i) => (
+              <details open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq__body">{f.a}</div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section section--alt" id="contact">
+      <div class="container cta-band">
+        <p class="eyebrow">Contact</p>
+        <h2>Parlons de votre paie et de vos obligations sociales</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">
+          Décrivez-nous votre effectif et vos échéances : nous revenons vers vous
+          sous 24&nbsp;h ouvrées avec une proposition claire.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${SITE.email}`}>Écrire au cabinet</a>
+          <a class="btn btn--ghost" href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
