@@ -627,6 +627,66 @@ p {
 }
 
 /* ------------------------------------------------------------------
+   Mot du dirigeant
+------------------------------------------------------------------ */
+.founder {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  box-shadow: var(--shadow-sm);
+}
+.founder__figure {
+  margin: 0;
+}
+.founder__figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+.founder__quote {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.1rem, 1.4vw + 0.7rem, 1.4rem);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.founder__name {
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+.founder__name strong {
+  display: block;
+  color: var(--ink-900);
+}
+.founder__name span {
+  font-size: 0.92rem;
+  color: var(--brand-600);
+  font-weight: 600;
+}
+.founder__note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-500);
+}
+
+@media (max-width: 760px) {
+  .founder {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .founder__figure {
+    max-width: 240px;
+  }
+}
+
+/* ------------------------------------------------------------------
    Final CTA
 ------------------------------------------------------------------ */
 .cta-band {
