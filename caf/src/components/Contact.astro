@@ -1,0 +1,226 @@
+---
+import { ORG, FORM_ENDPOINT } from '../consts';
+import Particles from './Particles.astro';
+
+const usingEndpoint = FORM_ENDPOINT.length > 0;
+const action = usingEndpoint ? FORM_ENDPOINT : `mailto:${ORG.email}`;
+const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plain';
+---
+
+<section id="contact" class="section contact">
+  <div class="contact-particles"><Particles variant="ambient" /></div>
+  <div class="wrap inner">
+    <div class="pitch" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2>Parlons de votre projet d’implantation</h2>
+      <p class="lede">
+        Un entretien de cadrage de 30 minutes, sans engagement, pour évaluer la forme juridique adaptée,
+        le calendrier réaliste et le budget à prévoir.
+      </p>
+
+      <ul class="coords">
+        <li>
+          <span>Téléphone</span>
+          <a href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
+        </li>
+        <li>
+          <span>E-mail</span>
+          <a href={`mailto:${ORG.email}`}>{ORG.email}</a>
+        </li>
+        <li>
+          <span>Bureaux</span>
+          <a href={ORG.mapsUrl} rel="noopener" target="_blank">
+            {ORG.street}, {ORG.locality} — {ORG.postalCode}
+          </a>
+        </li>
+        <li>
+          <span>Horaires</span>
+          <div>
+            {ORG.hoursDisplay.map(([d, h]) => <p>{d} : {h}</p>)}
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" action={action} method="post" enctype={enctype} data-reveal style="--reveal-i:1">
+      {!usingEndpoint && (
+        <p class="form-note">
+          Formulaire en mode e-mail. Pour un envoi fluide, renseignez FORM_ENDPOINT dans
+          src/consts.ts (Formspree, Web3Forms, Vercel Forms…).
+        </p>
+      )}
+
+      <div class="field">
+        <label for="nom">Nom et prénom</label>
+        <input id="nom" name="nom" type="text" autocomplete="name" required />
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="email">E-mail professionnel</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="tel">Téléphone</label>
+          <input id="tel" name="telephone" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="societe">Société</label>
+        <input id="societe" name="societe" type="text" autocomplete="organization" />
+      </div>
+      <div class="field">
+        <label for="message">Votre projet</label>
+        <textarea id="message" name="message" rows="4" placeholder="Activité, calendrier souhaité, effectif envisagé au Maroc…"></textarea>
+      </div>
+      <label class="consent">
+        <input type="checkbox" name="consentement" required />
+        <span>J’accepte que ces informations soient utilisées pour être recontacté(e) au sujet de ma demande.</span>
+      </label>
+      <button class="btn btn--primary" type="submit">Demander un rendez-vous</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      radial-gradient(34rem 22rem at 100% 100%, var(--blue-050) 0%, transparent 70%),
+      var(--bg-tint);
+    border-top: 1px solid var(--line);
+  }
+  .contact-particles {
+    position: absolute;
+    inset: auto -4% -8% auto;
+    width: min(34rem, 55%);
+    height: 80%;
+    z-index: -1;
+    -webkit-mask-image: radial-gradient(70% 70% at 70% 70%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(70% 70% at 70% 70%, #000 0%, transparent 78%);
+  }
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .pitch h2 {
+    font-size: var(--step-3);
+  }
+  .pitch .lede {
+    max-width: 42ch;
+    margin-bottom: 2rem;
+  }
+  .coords {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .coords li {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .coords span {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .coords a {
+    color: var(--teal-ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .coords a:hover {
+    color: var(--teal);
+  }
+  .coords p {
+    font-size: 0.92rem;
+    color: var(--body);
+  }
+
+  .form {
+    border-top: 2px solid var(--teal-ink);
+    padding-top: 1.75rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .form-note {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .field label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--teal-ink);
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.22);
+  }
+  textarea {
+    resize: vertical;
+  }
+  .consent {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .consent input {
+    width: auto;
+    margin-top: 0.15rem;
+    accent-color: var(--teal);
+  }
+  .form .btn {
+    justify-self: start;
+    margin-top: 0.3rem;
+  }
+
+  @media (max-width: 900px) {
+    .inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .two {
+      grid-template-columns: 1fr;
+    }
+    .coords li {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

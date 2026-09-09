@@ -1,0 +1,131 @@
+---
+import { SITE, ORG } from '../consts';
+
+interface QA {
+  q: string;
+  a: string;
+}
+interface Crumb {
+  name: string;
+  /** absolute or root-relative URL; omit on the final (current) crumb */
+  item?: string;
+}
+interface Props {
+  path?: string;
+  /** page name for schema (defaults to SITE.tagline) */
+  name?: string;
+  description?: string;
+  /** 'service' adds a Service node; 'hub' is the site home */
+  pageType?: 'hub' | 'service';
+  faqs?: QA[];
+  breadcrumb?: Crumb[];
+}
+
+const { path = '/', name = SITE.tagline, description = SITE.description, pageType = 'hub', faqs, breadcrumb } =
+  Astro.props;
+
+const origin = (Astro.site ?? new URL(SITE.url)).origin;
+const pageUrl = new URL(path, origin + '/').href;
+const cabinetId = `${origin}/#cabinet`;
+const websiteId = `${origin}/#website`;
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': ['ProfessionalService', 'LegalService', 'AccountingService'],
+    '@id': cabinetId,
+    name: ORG.legalName,
+    url: origin + '/',
+    sameAs: [ORG.parentSite, ORG.linkedin, ORG.facebook],
+    foundingDate: ORG.foundingYear,
+    email: ORG.email,
+    telephone: ORG.phone,
+    priceRange: '€€',
+    image: new URL(SITE.ogImage, origin + '/').href,
+    areaServed: [
+      { '@type': 'Country', name: 'Maroc' },
+      { '@type': 'Country', name: 'France' },
+    ],
+    knowsLanguage: ['fr', 'en'],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: ORG.street,
+      addressLocality: ORG.locality,
+      addressRegion: ORG.region,
+      postalCode: ORG.postalCode,
+      addressCountry: ORG.countryCode,
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: ORG.geo.lat, longitude: ORG.geo.lng },
+    hasMap: ORG.mapsUrl,
+    openingHoursSpecification: ORG.hours.map((h) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.days,
+      opens: h.opens,
+      closes: h.closes,
+    })),
+    // aggregateRating omis volontairement : à renseigner avec la vraie note + le vrai
+    // nombre d'avis du Google Business Profile de CAF Management.
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: origin + '/',
+    name: `${SITE.name} — ${SITE.tagline}`,
+    inLanguage: 'fr-FR',
+    publisher: { '@id': cabinetId },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name,
+    isPartOf: { '@id': websiteId },
+    about: { '@id': cabinetId },
+    inLanguage: 'fr-FR',
+    description,
+  },
+];
+
+const crumbs: Crumb[] = breadcrumb ?? [
+  { name: 'Accueil', item: origin + '/' },
+  { name },
+];
+graph.push({
+  '@type': 'BreadcrumbList',
+  '@id': `${pageUrl}#breadcrumb`,
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.name,
+    ...(c.item ? { item: c.item } : {}),
+  })),
+});
+
+if (pageType === 'service') {
+  graph.push({
+    '@type': 'Service',
+    '@id': `${pageUrl}#service`,
+    name,
+    serviceType: name,
+    description,
+    provider: { '@id': cabinetId },
+    areaServed: { '@type': 'Country', name: 'Maroc' },
+    audience: { '@type': 'BusinessAudience', name: 'Entreprises et groupes opérant au Maroc' },
+  });
+}
+
+if (faqs && faqs.length) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

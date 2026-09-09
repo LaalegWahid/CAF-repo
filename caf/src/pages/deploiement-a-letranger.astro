@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import NumberedList from '../components/NumberedList.astro';
+import DefList from '../components/DefList.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import Contact from '../components/Contact.astro';
+
+const title = "Déploiement à l'étranger";
+const description =
+  "Accompagnement des entreprises marocaines qui ouvrent une filiale ou une succursale hors du Maroc : choix du pays, réglementation des changes, constitution locale, consolidation et prix de transfert.";
+
+const prise_en_charge = [
+  {
+    title: 'Choix du pays et du mode d’implantation',
+    body: 'Filiale, succursale, bureau de représentation ou joint-venture, selon le marché visé, la fiscalité locale et le niveau d’engagement souhaité.',
+  },
+  {
+    title: 'Réglementation des changes',
+    body: 'Constitution du dossier d’investissement à l’étranger auprès de l’Office des Changes et organisation du rapatriement des dividendes.',
+  },
+  {
+    title: 'Constitution de l’entité locale',
+    body: 'Immatriculation dans le pays cible, en lien avec nos correspondants du réseau Execor présents sur place.',
+  },
+  {
+    title: 'Consolidation',
+    body: 'Intégration de la filiale étrangère dans vos comptes consolidés : périmètre, retraitements d’homogénéisation et conversion des devises.',
+  },
+  {
+    title: 'Prix de transfert & conventions fiscales',
+    body: 'Politique de prix intra-groupe, documentation associée et élimination des doubles impositions grâce aux conventions signées par le Maroc.',
+  },
+  {
+    title: 'Reporting de groupe',
+    body: 'Un format de reporting unique entre la maison mère marocaine et ses filiales, consolidable chaque mois.',
+  },
+];
+
+const marches = [
+  { title: 'Union européenne', body: 'France et Espagne en tête, pour la proximité commerciale et les accords existants.' },
+  { title: 'Afrique de l’Ouest', body: 'Zone UEMOA : monnaie commune, droit OHADA harmonisé, marchés en croissance.' },
+  { title: 'Afrique centrale', body: 'Zone CEMAC, également sous droit OHADA.' },
+  { title: 'Pays du Golfe', body: 'Émirats arabes unis et Arabie saoudite, pour les activités de services et de négoce.' },
+];
+
+const deroule = [
+  { when: 'Semaines 1 – 2', title: 'Cadrage', body: 'Marché cible, mode d’implantation, budget et calendrier ; première lecture fiscale et réglementaire.' },
+  { when: 'Semaines 3 – 4', title: 'Autorisations de change', body: 'Montage et dépôt du dossier d’investissement à l’étranger auprès de l’Office des Changes.' },
+  { when: 'Mois 2 – 3', title: 'Constitution locale', body: 'Création de l’entité avec le correspondant du pays, ouverture bancaire, premières obligations locales.' },
+  { when: 'Ensuite', title: 'Intégration groupe', body: 'Mise en place du reporting, de la consolidation et de la politique de prix de transfert.' },
+];
+
+const faqs = [
+  {
+    q: 'Une autorisation est-elle nécessaire pour investir à l’étranger depuis le Maroc ?',
+    a: "Oui. Les investissements à l’étranger réalisés par des résidents sont encadrés par la réglementation des changes et passent par un dossier auprès de l’Office des Changes. Nous le montons et le suivons pour vous.",
+  },
+  {
+    q: 'Travaillez-vous avec des cabinets locaux dans le pays cible ?',
+    a: 'Oui. CAF Management est membre du réseau international Execor : nous nous appuyons sur un correspondant local pour la constitution, la comptabilité et la fiscalité de la filiale, tout en gardant la coordination côté Maroc.',
+  },
+  {
+    q: 'Comment la filiale étrangère entre-t-elle dans nos comptes ?',
+    a: 'Par la consolidation : nous définissons le périmètre, appliquons les retraitements d’homogénéisation, convertissons les comptes dans votre devise de présentation et produisons les états consolidés.',
+  },
+  {
+    q: 'Faut-il une politique de prix de transfert dès la première filiale ?',
+    a: 'Dès qu’il existe des flux entre la société marocaine et sa filiale (ventes, services, redevances, financements), oui : une politique documentée protège le groupe en cas de contrôle, des deux côtés de la frontière.',
+  },
+];
+---
+
+<BaseLayout
+  path="/deploiement-a-letranger"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Déploiement international"
+      title="Développer votre activité hors du Maroc, avec un cadre maîtrisé"
+      lede="Choix du pays, autorisations de change, constitution de la filiale, consolidation et prix de transfert : nous accompagnons les entreprises marocaines qui s’implantent à l’étranger, avec un correspondant local sur place."
+    />
+
+    <Section index="01" eyebrow="Ce que nous prenons en charge" title="De la décision au reporting consolidé">
+      <NumberedList items={prise_en_charge} />
+    </Section>
+
+    <Section index="02" eyebrow="Marchés fréquents" title="Où nos clients s’implantent" variant="tint">
+      <DefList items={marches} />
+    </Section>
+
+    <Section index="03" eyebrow="Déroulé" title="Les grandes étapes d’un projet" variant="dark">
+      <Steps items={deroule} />
+    </Section>
+
+    <Faq faqs={faqs} title="Déploiement à l’étranger : questions fréquentes" />
+    <RelatedServices current="/deploiement-a-letranger" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

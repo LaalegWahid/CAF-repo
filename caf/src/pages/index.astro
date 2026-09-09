@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import DefList from '../components/DefList.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import { SERVICES } from '../consts';
+import { valueProps, steps } from '../data/sections';
+
+const description =
+  "Cabinet d'expertise comptable et de conseil juridique à Casablanca depuis 1995. Nous accompagnons la création de société, la structuration de groupe, le droit des sociétés, la conformité réglementaire et le déploiement à l'étranger.";
+
+const hubFaqs = [
+  {
+    q: 'Accompagnez-vous les entreprises étrangères qui s’implantent au Maroc ?',
+    a: "Oui. C’est une part importante de notre activité : création de filiale ou de succursale, domiciliation, mise en place de la comptabilité et de la paie, et reporting vers la maison mère. Nous travaillons en français et en anglais.",
+  },
+  {
+    q: 'Faites-vous seulement du juridique, ou aussi la comptabilité et la paie ?',
+    a: "Les deux. CAF Management réunit quatre départements — Comptabilité, Conseil, Audit et Social. Après la création, nos équipes prennent en charge la tenue comptable, les déclarations fiscales, la paie et les déclarations sociales.",
+  },
+  {
+    q: 'Où êtes-vous situés ?',
+    a: 'À Casablanca, 17 Rue Mhiwla, Hay El Hana (Hay Hassani – 20210). Nous intervenons dans tout le Maroc et par visioconférence avec les équipes restées à l’étranger.',
+  },
+  {
+    q: 'Depuis quand le cabinet existe-t-il ?',
+    a: 'CAF Management accompagne les entreprises depuis 1995. Le cabinet est indépendant et membre du réseau international Execor.',
+  },
+];
+---
+
+<BaseLayout path="/" title="Conseil juridique & implantation au Maroc" description={description} pageType="hub" faqs={hubFaqs}>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Conseil juridique · Casablanca · depuis 1995"
+      title="Créer, structurer et développer votre société au Maroc"
+      lede="CAF Management accompagne les dirigeants et les groupes sur toute la vie juridique de leur entreprise au Maroc : constitution, structuration, secrétariat juridique, conformité réglementaire et implantation à l’étranger."
+      secondary={{ label: 'Nos expertises', href: '#expertises' }}
+      facts={[
+        ['Depuis', '1995'],
+        ['Quatre départements', 'Comptabilité · Conseil · Audit · Social'],
+        ['Réseau', 'Membre d’Execor'],
+        ['Basés à', 'Casablanca'],
+      ]}
+    />
+
+    <Section
+      id="expertises"
+      index="01"
+      eyebrow="Expertises"
+      title="Cinq expertises, un seul interlocuteur"
+      intro="Chaque volet peut être mobilisé seul ou dans le cadre d’un accompagnement complet."
+    >
+      <ul class="svc">
+        {
+          SERVICES.map((s, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <a href={s.slug}>
+                <span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="t">{s.title}</span>
+                <span class="b">{s.blurb}</span>
+                <span class="arw" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+
+    <Section index="02" eyebrow="Pourquoi le Maroc" title="Un marché proche, un cadre lisible" variant="tint">
+      <DefList items={valueProps} />
+    </Section>
+
+    <Section
+      index="03"
+      eyebrow="Méthode"
+      title="Comment nous travaillons"
+      intro="Un cadrage sans engagement, un calendrier écrit, un point d’avancement à chaque jalon."
+      variant="dark"
+    >
+      <Steps items={steps} />
+    </Section>
+
+    <Faq faqs={hubFaqs} title="Questions fréquentes sur notre accompagnement" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .svc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .svc li:first-child {
+    grid-column: 1 / -1;
+  }
+  .svc a {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    height: 100%;
+    padding: clamp(1.5rem, 3.5vw, 2.2rem);
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.22s ease;
+  }
+  .svc a:hover {
+    background: var(--blue-050);
+  }
+  .svc .n {
+    position: absolute;
+    top: clamp(1rem, 3vw, 1.6rem);
+    right: clamp(1.1rem, 3vw, 1.8rem);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    line-height: 1;
+    color: #d3e8f7;
+    transition: color 0.25s ease;
+  }
+  .svc a:hover .n {
+    color: var(--blue);
+  }
+  .svc .t {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--navy);
+    max-width: 24ch;
+    transition: color 0.15s ease;
+  }
+  .svc a:hover .t {
+    color: var(--blue-600);
+  }
+  .svc .b {
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 46ch;
+  }
+  .svc .arw {
+    margin-top: 0.4rem;
+    color: var(--blue-600);
+    font-size: 1.15rem;
+    transition: transform 0.22s var(--ease-out);
+  }
+  .svc a:hover .arw {
+    transform: translateX(6px);
+  }
+
+  @media (max-width: 680px) {
+    .svc {
+      grid-template-columns: 1fr;
+    }
+    .svc li:first-child {
+      grid-column: auto;
+    }
+  }
+</style>

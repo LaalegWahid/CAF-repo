@@ -1,0 +1,225 @@
+---
+import { NAV, SERVICES, ORG, CTA_HREF, SITE } from '../consts';
+
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+---
+
+<header class="hdr" data-header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label={`${SITE.name} — accueil`}>
+      <img class="brand-mark" src="/logo.svg" width="52" height="40" alt="" />
+      <span class="brand-text">CAF <span>Management</span></span>
+    </a>
+
+    <nav class="nav nav--desktop" aria-label="Navigation principale">
+      {
+        SERVICES.map((s) => (
+          <a href={s.slug} aria-current={current === s.slug ? 'page' : undefined}>
+            {s.nav}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="actions">
+      <a class="tel" href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
+      <a class="btn btn--primary btn--sm" href={CTA_HREF}>Prendre rendez-vous</a>
+    </div>
+
+    <details class="nav--mobile">
+      <summary aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </summary>
+      <nav aria-label="Navigation principale">
+        {
+          NAV.map((i) => (
+            <a href={i.href} aria-current={current === i.href ? 'page' : undefined}>
+              {i.label}
+            </a>
+          ))
+        }
+        <a class="tel" href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
+        <a class="btn btn--primary btn--sm" href={CTA_HREF}>Prendre rendez-vous</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hdr[data-scrolled] {
+    border-color: var(--line-soft);
+    box-shadow: 0 8px 30px -20px rgba(14, 58, 91, 0.4);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4.5rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    flex: none;
+  }
+  .brand-mark {
+    width: 32px;
+    height: auto;
+  }
+  .brand-text span {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .nav--desktop {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.15rem;
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+  .nav--desktop a {
+    position: relative;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--body);
+    padding: 0.35rem 0;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  .nav--desktop a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--grey));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.28s var(--ease-out);
+  }
+  .nav--desktop a:hover {
+    color: var(--navy);
+  }
+  .nav--desktop a:hover::after,
+  .nav--desktop a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+  .nav--desktop a[aria-current='page'] {
+    color: var(--navy);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex: none;
+  }
+  .actions .tel {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--blue-600);
+    white-space: nowrap;
+  }
+  .actions .tel:hover {
+    color: var(--navy);
+  }
+
+  .nav--mobile {
+    display: none;
+    margin-left: auto;
+    position: relative;
+  }
+  .nav--mobile summary {
+    list-style: none;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-content: center;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+  }
+  .nav--mobile summary::-webkit-details-marker {
+    display: none;
+  }
+  .nav--mobile summary span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--navy);
+  }
+  .nav--mobile[open] summary {
+    background: var(--blue-050);
+  }
+  .nav--mobile nav {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.6rem);
+    width: min(82vw, 20rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .nav--mobile nav a:not(.btn) {
+    text-decoration: none;
+    color: var(--body);
+    font-weight: 500;
+    padding: 0.7rem 0.75rem;
+    border-radius: var(--radius-md);
+  }
+  .nav--mobile nav a:not(.btn):hover,
+  .nav--mobile nav a[aria-current='page'] {
+    background: var(--blue-050);
+    color: var(--navy);
+  }
+  .nav--mobile nav .tel {
+    color: var(--blue-600);
+    font-weight: 600;
+  }
+  .nav--mobile nav .btn {
+    margin-top: 0.5rem;
+  }
+
+  /* phone label needs the most room — drop it first */
+  @media (max-width: 1200px) {
+    .actions .tel {
+      display: none;
+    }
+  }
+  /* not enough width for a horizontal nav — switch to the menu */
+  @media (max-width: 1000px) {
+    .nav--desktop,
+    .actions {
+      display: none;
+    }
+    .nav--mobile {
+      display: block;
+    }
+  }
+</style>

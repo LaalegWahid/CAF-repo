@@ -1,0 +1,94 @@
+---
+import { legalForms } from '../data/sections';
+---
+
+<section id="formes" class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Formes juridiques</p>
+      <h2>Quelle structure pour votre activité au Maroc ?</h2>
+      <p>
+        La SARL couvre la majorité des projets de filiale. La succursale et le bureau de liaison
+        conviennent aux phases de test. Nous tranchons ensemble lors du cadrage.
+      </p>
+    </div>
+
+    <div class="table-scroll" role="region" aria-label="Comparatif des formes juridiques" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Forme</th>
+            <th scope="col">Capital social</th>
+            <th scope="col">Associés</th>
+            <th scope="col">Responsabilité</th>
+            <th scope="col">Idéale pour</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            legalForms.map((f) => (
+              <tr>
+                <th scope="row">{f.form}</th>
+                <td>{f.capital}</td>
+                <td>{f.assoc}</td>
+                <td>{f.resp}</td>
+                <td>{f.best}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="disclaimer">
+      Comparatif simplifié à jour à la date de rédaction. Les seuils, obligations de commissariat aux
+      comptes et régimes sectoriels évoluent — la structure retenue est validée par écrit avant toute
+      formalité.
+    </p>
+  </div>
+</section>
+
+<style>
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .table-scroll:focus-visible {
+    outline: 3px solid var(--teal);
+    outline-offset: 2px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 720px;
+    font-size: 0.94rem;
+  }
+  thead th {
+    text-align: left;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--teal);
+    padding: 0.95rem 1.1rem;
+  }
+  tbody th,
+  tbody td {
+    padding: 1rem 1.1rem;
+    border-top: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+  tbody th {
+    text-align: left;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--teal-ink);
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) {
+    background: var(--teal-tint-2);
+  }
+</style>

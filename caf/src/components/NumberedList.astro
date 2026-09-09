@@ -1,0 +1,83 @@
+---
+interface Props {
+  items: { title: string; body: string }[];
+}
+const { items } = Astro.props;
+---
+
+<ol class="nlist">
+  {
+    items.map((it, i) => (
+      <li data-reveal style={`--reveal-i:${i}`}>
+        <span class="n">{String(i + 1).padStart(2, '0')}</span>
+        <div class="main">
+          <h3>{it.title}</h3>
+          <p>{it.body}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .nlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nlist li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: clamp(1rem, 3vw, 2.75rem);
+    padding-block: clamp(1.6rem, 3.5vw, 2.2rem);
+    border-top: 1px solid var(--line);
+  }
+  .nlist li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .n {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.55rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #c4d0d9;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.25s var(--ease-out);
+  }
+  .main h3 {
+    font-size: 1.22rem;
+    margin-bottom: 0.4rem;
+    margin-top: 0.1rem;
+    transition: color 0.2s ease;
+  }
+  .main p {
+    max-width: 64ch;
+  }
+  .nlist li:hover .n,
+  .nlist li:hover .main h3 {
+    color: var(--blue-600);
+  }
+
+  :global(.section--dark) .nlist li {
+    border-color: rgba(255, 255, 255, 0.13);
+  }
+  :global(.section--dark) .n {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  :global(.section--dark) .main p {
+    color: rgba(255, 255, 255, 0.72);
+  }
+  :global(.section--dark) .nlist li:hover .n,
+  :global(.section--dark) .nlist li:hover .main h3 {
+    color: #fff;
+  }
+
+  @media (max-width: 560px) {
+    .nlist li {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>

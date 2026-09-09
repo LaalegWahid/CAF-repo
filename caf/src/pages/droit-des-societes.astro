@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import NumberedList from '../components/NumberedList.astro';
+import DefList from '../components/DefList.astro';
+import Faq from '../components/Faq.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import Contact from '../components/Contact.astro';
+
+const title = 'Droit des sociétés & secrétariat juridique';
+const description =
+  "Secrétariat juridique annuel, assemblées, procès-verbaux, mouvements de capital, cessions de parts, transformations et dissolutions. CAF Management tient à jour la vie juridique de votre société au Maroc.";
+
+const interventions = [
+  {
+    title: 'Secrétariat juridique annuel',
+    body: 'Convocation et tenue de l’assemblée d’approbation des comptes, rapport de gestion, procès-verbaux, dépôt au greffe et publications légales dans les délais.',
+  },
+  {
+    title: 'Mouvements de capital',
+    body: 'Augmentation en numéraire, par apports en nature ou par incorporation de réserves ; réduction de capital ; « coup d’accordéon » pour apurer les pertes.',
+  },
+  {
+    title: 'Cessions de parts et d’actions',
+    body: 'Projet de cession, procédure d’agrément, acte de cession, enregistrement, mise à jour des registres et des statuts.',
+  },
+  {
+    title: 'Transformations',
+    body: 'Passage de SARL en SA et inversement, avec intervention du commissaire à la transformation lorsque la loi l’impose.',
+  },
+  {
+    title: 'Modifications statutaires',
+    body: 'Transfert de siège, changement de dénomination, d’objet social, de gérance ou de présidence, prorogation de la durée.',
+  },
+  {
+    title: 'Dissolution & liquidation amiable',
+    body: 'Décision de dissolution, nomination du liquidateur, opérations et comptes de liquidation, radiation au Registre du Commerce.',
+  },
+];
+
+const pourquoi = [
+  {
+    title: 'Sécurité juridique',
+    body: 'Des décisions prises et publiées dans les formes : on évite la nullité des délibérations, les sanctions et les contestations d’associés.',
+  },
+  {
+    title: 'Registres à jour',
+    body: 'Registre des mouvements de titres, registre des assemblées et dépôts au greffe tenus en continu, pas reconstitués dans l’urgence.',
+  },
+  {
+    title: 'Prêt pour un contrôle ou une due diligence',
+    body: 'Un dossier juridique propre accélère un audit d’acquisition, une demande de financement ou l’entrée d’un investisseur.',
+  },
+  {
+    title: 'Temps de direction préservé',
+    body: 'Les échéances sont suivies pour vous ; vous validez, vous signez, nous déposons.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'L’assemblée générale annuelle est-elle obligatoire ?',
+    a: "Oui. Les sociétés commerciales doivent réunir une assemblée pour approuver les comptes dans les six mois de la clôture, statuer sur l’affectation du résultat et, le cas échéant, régulariser une situation de capitaux propres inférieurs au quart du capital.",
+  },
+  {
+    q: 'Que se passe-t-il si les formalités n’ont pas été faites depuis plusieurs années ?',
+    a: 'Nous réalisons une régularisation : reconstitution des assemblées manquantes, procès-verbaux, dépôts au greffe et publications. Mieux vaut le faire avant un contrôle, une cession ou une demande de crédit.',
+  },
+  {
+    q: 'Faut-il un commissaire aux comptes pour une augmentation de capital ?',
+    a: 'Cela dépend de l’opération et de la forme sociale : l’intervention d’un commissaire aux apports est requise en cas d’apports en nature, celle d’un commissaire à la transformation lors du passage en SA. Nous le déterminons en amont.',
+  },
+  {
+    q: 'Pouvez-vous gérer une cession de parts entre associés ?',
+    a: 'Oui : rédaction du projet et de l’acte, procédure d’agrément prévue par les statuts, enregistrement auprès de l’administration fiscale et mise à jour des registres et des statuts.',
+  },
+  {
+    q: 'Intervenez-vous ponctuellement ou sur abonnement annuel ?',
+    a: 'Les deux. Beaucoup de clients optent pour un forfait de secrétariat juridique annuel couvrant l’assemblée des comptes et une ou deux modifications ; les opérations lourdes sont chiffrées à part.',
+  },
+];
+---
+
+<BaseLayout
+  path="/droit-des-societes"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Droit des sociétés"
+      title="La vie juridique de votre société, tenue à jour toute l’année"
+      lede="Assemblées, procès-verbaux, mouvements de capital, cessions, transformations : nous prenons en charge le secrétariat juridique de votre société au Maroc et sécurisons chaque décision."
+    />
+
+    <Section index="01" eyebrow="Nos interventions" title="Ce que nous prenons en charge">
+      <NumberedList items={interventions} />
+    </Section>
+
+    <Section
+      index="02"
+      eyebrow="Pourquoi l’externaliser"
+      title="L’intérêt d’un secrétariat juridique suivi"
+      variant="tint"
+    >
+      <DefList items={pourquoi} />
+    </Section>
+
+    <Faq faqs={faqs} title="Droit des sociétés : questions fréquentes" />
+    <RelatedServices current="/droit-des-societes" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

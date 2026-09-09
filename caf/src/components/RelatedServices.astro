@@ -1,0 +1,90 @@
+---
+import { SERVICES } from '../consts';
+
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+const items = SERVICES.filter((s) => s.slug !== current);
+---
+
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Autres expertises</p>
+      <h2>Le reste de l’accompagnement juridique</h2>
+    </div>
+
+    <ul class="rel">
+      {
+        items.map((s, i) => (
+          <li data-reveal style={`--reveal-i:${i}`}>
+            <a href={s.slug}>
+              <span class="t">{s.title}</span>
+              <span class="b">{s.blurb}</span>
+              <span class="arw" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rel {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rel li {
+    border-top: 1px solid var(--line);
+  }
+  .rel a {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.9fr) 1.6fr auto;
+    align-items: baseline;
+    gap: 0.4rem 2rem;
+    padding: clamp(1.1rem, 2.5vw, 1.6rem) 0.9rem;
+    margin-inline: -0.9rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.22s ease;
+  }
+  .rel a:hover {
+    background: #fff;
+  }
+  .t {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.12rem;
+    color: var(--navy);
+    transition: color 0.15s ease;
+  }
+  .b {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .arw {
+    color: var(--blue-600);
+    font-size: 1.15rem;
+    transition: transform 0.22s var(--ease-out);
+  }
+  .rel a:hover .t {
+    color: var(--blue-600);
+  }
+  .rel a:hover .arw {
+    transform: translateX(6px);
+  }
+
+  @media (max-width: 720px) {
+    .rel a {
+      grid-template-columns: 1fr auto;
+    }
+    .b {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

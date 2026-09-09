@@ -1,0 +1,56 @@
+---
+import Particles from './Particles.astro';
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  /** grand numéro-repère affiché au-dessus du titre, ex. "02" */
+  index?: string;
+  variant?: 'plain' | 'tint' | 'dark';
+}
+const { id, eyebrow, title, intro, index, variant = 'plain' } = Astro.props;
+const cls = [
+  'section',
+  variant === 'tint' && 'section--tint',
+  variant === 'dark' && 'section--dark',
+]
+  .filter(Boolean)
+  .join(' ');
+const hasHead = eyebrow || title || intro || index;
+---
+
+<section id={id} class={cls} data-section-variant={variant}>
+  {variant === 'dark' && <div class="sec-particles"><Particles variant="ambient" /></div>}
+  <div class="wrap">
+    {
+      hasHead && (
+        <div class="section-head" data-reveal>
+          {index && <span class="s-index">{index}</span>}
+          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+          {title && <h2>{title}</h2>}
+          {intro && <p>{intro}</p>}
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .sec-particles {
+    position: absolute;
+    inset: -10% -6% auto auto;
+    width: min(38rem, 55%);
+    height: 70%;
+    z-index: -1;
+    -webkit-mask-image: radial-gradient(70% 70% at 78% 30%, #000 0%, transparent 76%);
+    mask-image: radial-gradient(70% 70% at 78% 30%, #000 0%, transparent 76%);
+  }
+</style>

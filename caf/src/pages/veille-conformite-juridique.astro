@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import NumberedList from '../components/NumberedList.astro';
+import DefList from '../components/DefList.astro';
+import Faq from '../components/Faq.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import Contact from '../components/Contact.astro';
+
+const title = 'Veille & conformité juridique';
+const description =
+  "Veille réglementaire continue, cartographie des obligations et mise en conformité de votre entreprise au Maroc : droit des sociétés, droit du travail, fiscalité, change et données personnelles.";
+
+const dispositif = [
+  {
+    title: 'Veille réglementaire',
+    body: 'Suivi des évolutions du droit des sociétés, du travail, de la fiscalité, de la réglementation des changes et des textes sectoriels qui s’appliquent à votre activité.',
+  },
+  {
+    title: 'Alertes personnalisées',
+    body: 'Quand un texte vous concerne, vous recevez une note courte : ce qui change, l’impact concret pour vous, les actions à mener et l’échéance.',
+  },
+  {
+    title: 'Cartographie des obligations',
+    body: 'Inventaire de vos obligations déclaratives, documentaires et d’affichage, consolidé dans un calendrier de conformité unique.',
+  },
+  {
+    title: 'Mise en conformité',
+    body: 'Protection des données personnelles (loi 09-08 / CNDP), registre du personnel, affichages obligatoires, conventions, licences et autorisations d’exercice.',
+  },
+  {
+    title: 'Assistance en cas de contrôle',
+    body: 'Préparation des dossiers justificatifs et accompagnement dans les échanges avec l’administration (inspection du travail, CNSS, administration fiscale, Office des Changes).',
+  },
+];
+
+const domaines = [
+  { title: 'Droit des sociétés', body: 'Obligations d’assemblées, de dépôt et de publication, seuils de commissariat aux comptes.' },
+  { title: 'Droit du travail & social', body: 'Contrats, durée du travail, règlement intérieur, CNSS, AMO, médecine du travail.' },
+  { title: 'Fiscalité & TVA', body: 'Échéancier déclaratif, obligations documentaires, facturation électronique.' },
+  { title: 'Réglementation des changes', body: 'Opérations avec l’étranger, investissements, comptes en devises, rapatriement.' },
+  { title: 'Données personnelles', body: 'Déclarations et autorisations CNDP, mentions d’information, durées de conservation.' },
+  { title: 'Réglementations sectorielles', body: 'Autorisations, cahiers des charges et normes propres à votre secteur.' },
+];
+
+const faqs = [
+  {
+    q: 'En quoi est-ce différent d’un abonnement à un service d’information juridique ?',
+    a: "Une base d’information vous livre des textes bruts. Notre dispositif filtre ce qui vous concerne réellement, en traduit l’impact opérationnel et vous dit quoi faire et pour quand — c’est un service, pas une revue de presse.",
+  },
+  {
+    q: 'La conformité RGPD s’applique-t-elle au Maroc ?',
+    a: "Le cadre marocain est la loi 09-08 relative à la protection des données personnelles, supervisée par la CNDP, proche dans l’esprit du RGPD. Si vous traitez aussi des données de personnes situées dans l’Union européenne, le RGPD peut s’appliquer en parallèle.",
+  },
+  {
+    q: 'Recevrai-je une alerte pour chaque nouveau texte ?',
+    a: 'Non — uniquement pour ceux qui ont un effet sur votre activité, votre secteur ou votre organisation. L’objectif est de vous faire gagner du temps, pas d’ajouter du bruit.',
+  },
+  {
+    q: 'Pouvez-vous auditer notre niveau de conformité actuel ?',
+    a: 'Oui. Nous réalisons un état des lieux (obligations couvertes, écarts, risques) et nous en tirons un plan de mise en conformité priorisé.',
+  },
+];
+---
+
+<BaseLayout
+  path="/veille-conformite-juridique"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Veille & conformité"
+      title="Rester en conformité sans surveiller le Bulletin officiel"
+      lede="Une veille réglementaire ciblée sur votre activité, des alertes qui disent quoi faire et pour quand, et l’accompagnement pour mettre vos obligations à jour — au Maroc, le cadre bouge vite."
+    />
+
+    <Section index="01" eyebrow="Notre dispositif" title="Comment nous vous couvrons">
+      <NumberedList items={dispositif} />
+    </Section>
+
+    <Section index="02" eyebrow="Domaines couverts" title="Ce que la veille surveille pour vous" variant="tint">
+      <DefList items={domaines} />
+    </Section>
+
+    <Faq faqs={faqs} title="Veille & conformité : questions fréquentes" />
+    <RelatedServices current="/veille-conformite-juridique" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

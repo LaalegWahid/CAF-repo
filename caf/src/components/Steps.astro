@@ -1,0 +1,83 @@
+---
+interface Props {
+  items: { when?: string; title: string; body: string }[];
+}
+const { items } = Astro.props;
+---
+
+<ol class="steps">
+  {
+    items.map((s, i) => (
+      <li data-reveal style={`--reveal-i:${i}`}>
+        <div class="meta">
+          <span class="n">{String(i + 1).padStart(2, '0')}</span>
+          {s.when && <span class="when">{s.when}</span>}
+        </div>
+        <div class="body">
+          <h3>{s.title}</h3>
+          <p>{s.body}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: clamp(1.25rem, 3vw, 3rem);
+    padding-block: clamp(1.7rem, 3.5vw, 2.4rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+  }
+  .steps li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .n {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.7rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.3);
+    font-variant-numeric: tabular-nums;
+  }
+  .steps li:first-child .n {
+    color: var(--blue);
+  }
+  .when {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .body h3 {
+    font-size: 1.28rem;
+    margin-bottom: 0.45rem;
+  }
+  .body p {
+    max-width: 62ch;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  @media (max-width: 620px) {
+    .steps li {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .meta {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.9rem;
+    }
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import DefList from '../components/DefList.astro';
+import NumberedList from '../components/NumberedList.astro';
+import Steps from '../components/Steps.astro';
+import LegalForms from '../components/LegalForms.astro';
+import Faq from '../components/Faq.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import Contact from '../components/Contact.astro';
+import { valueProps, offres, steps, heroFacts } from '../data/sections';
+import { creationFaqs } from '../data/faq';
+
+const title = 'Créer une société au Maroc';
+const description =
+  "Constitution, immatriculation et démarrage de votre société au Maroc — SARL, SA, succursale ou bureau de liaison. CAF Management, cabinet à Casablanca depuis 1995, pilote toute la procédure.";
+---
+
+<BaseLayout
+  path="/creation-de-societe"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={creationFaqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Création de société · Casablanca · depuis 1995"
+      title="Créer votre société au Maroc, l’esprit tranquille"
+      lede="De l’étude juridique à la première clôture comptable, CAF Management pilote l’ensemble de votre implantation au Maroc — immatriculation, domiciliation, fiscalité, paie et RH — avec un interlocuteur unique à Casablanca."
+      secondary={{ label: 'Voir notre méthode', href: '#methode' }}
+      facts={heroFacts}
+    />
+
+    <Section
+      id="pourquoi"
+      index="01"
+      eyebrow="Pourquoi le Maroc"
+      title="Un marché proche, un cadre lisible pour les groupes français"
+      intro="Le Maroc est la première destination d’investissement français en Afrique. Quatre raisons reviennent dans presque tous les dossiers."
+    >
+      <DefList items={valueProps} />
+      <p class="disclaimer">
+        Informations générales fournies à titre indicatif et à jour à la date de rédaction. Elles ne
+        constituent pas un conseil juridique ou fiscal personnalisé : chaque situation est validée lors
+        de l’entretien de cadrage.
+      </p>
+    </Section>
+
+    <Section
+      id="accompagnement"
+      index="02"
+      eyebrow="Accompagnement"
+      title="Un seul cabinet, de la création à la gestion courante"
+      intro="Nos quatre départements — Comptabilité, Conseil, Audit et Social — interviennent de façon coordonnée, du premier acte jusqu’au reporting mensuel."
+      variant="tint"
+    >
+      <NumberedList items={offres} />
+    </Section>
+
+    <Section
+      id="methode"
+      index="03"
+      eyebrow="Méthode"
+      title="Votre implantation en 5 étapes"
+      intro="Un calendrier communiqué dès le cadrage, avec un point d’avancement à chaque jalon. Les délais sont indicatifs et varient selon la forme juridique et le secteur."
+      variant="dark"
+    >
+      <Steps items={steps} />
+    </Section>
+
+    <LegalForms />
+
+    <Faq
+      faqs={creationFaqs}
+      title="Créer une société au Maroc : ce que les dirigeants nous demandent"
+    />
+
+    <RelatedServices current="/creation-de-societe" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

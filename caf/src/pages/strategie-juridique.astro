@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import NumberedList from '../components/NumberedList.astro';
+import DefList from '../components/DefList.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+import Contact from '../components/Contact.astro';
+
+const title = 'Stratégie juridique & structuration de groupe';
+const description =
+  "Choix de la forme juridique, création de holding, pacte d'associés, restructuration et gouvernance. CAF Management structure votre groupe au Maroc en cohérence avec vos enjeux fiscaux et patrimoniaux.";
+
+const interventions = [
+  {
+    title: 'Choix de la forme juridique',
+    body: 'SARL, SA, société en commandite ou succursale : nous arbitrons selon votre activité, votre actionnariat, votre fiscalité et le scénario de sortie envisagé.',
+  },
+  {
+    title: 'Création de holding',
+    body: 'Holding patrimoniale ou animatrice : remontée des dividendes, effet de levier d’acquisition, régime des sociétés mères et intégration des flux de groupe.',
+  },
+  {
+    title: 'Pacte d’associés',
+    body: 'Gouvernance, clauses de sortie (droit de préemption, de suite et de sortie conjointe), inaliénabilité, non-concurrence et mécanismes de déblocage en cas de conflit.',
+  },
+  {
+    title: 'Restructuration',
+    body: 'Fusion, apport partiel d’actif, scission, transformation, transfert de siège : cadrage juridique, fiscal et social de l’opération.',
+  },
+  {
+    title: 'Gouvernance & délégations',
+    body: 'Répartition des pouvoirs, délégations de signature, conventions réglementées et cartographie des responsabilités des dirigeants.',
+  },
+  {
+    title: 'Structuration des flux intra-groupe',
+    body: 'Management fees, redevances de marque, prêts intra-groupe et refacturations, dans le respect des prix de transfert et des conventions fiscales.',
+  },
+];
+
+const quand = [
+  {
+    title: 'À la création',
+    body: 'Pour poser une structure qui n’aura pas à être défaite dans deux ans : forme, capital, gouvernance, place d’une holding.',
+  },
+  {
+    title: 'Avant une levée de fonds',
+    body: 'Pour présenter un cap table lisible, des statuts investisseurs-compatibles et un pacte prêt à négocier.',
+  },
+  {
+    title: 'Avant une acquisition',
+    body: 'Pour choisir le véhicule d’acquisition, loger la dette au bon niveau et anticiper l’intégration.',
+  },
+  {
+    title: 'En cas de tension entre associés',
+    body: 'Pour objectiver les blocages et activer ou renégocier les clauses du pacte.',
+  },
+  {
+    title: 'Pour préparer une transmission',
+    body: 'Pour organiser la détention, la gouvernance familiale et la fiscalité de la cession ou de la donation.',
+  },
+];
+
+const deroule = [
+  {
+    when: 'Semaine 1',
+    title: 'Diagnostic',
+    body: 'Revue des statuts, de l’actionnariat, des flux et des objectifs des associés.',
+  },
+  {
+    when: 'Semaines 2 – 3',
+    title: 'Recommandation chiffrée',
+    body: 'Schéma cible, impacts juridiques, fiscaux et sociaux, calendrier et budget.',
+  },
+  {
+    when: 'Semaines 3 – 8',
+    title: 'Mise en œuvre',
+    body: 'Rédaction des actes, assemblées, formalités et publicité légale, en lien avec le notaire si nécessaire.',
+  },
+  {
+    when: 'Ensuite',
+    title: 'Suivi',
+    body: 'Tenue du secrétariat juridique et mise à jour du schéma au fil de la vie du groupe.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Faut-il obligatoirement une holding ?',
+    a: "Non. Une holding se justifie quand il y a plusieurs associés, plusieurs activités, un projet d’acquisition à effet de levier ou un objectif de transmission. Pour une société unique détenue par une personne, elle ajoute surtout de la complexité. Nous tranchons au cas par cas.",
+  },
+  {
+    q: 'Le pacte d’associés est-il vraiment utile pour une PME ?',
+    a: "Oui. C’est le document qui évite qu’un désaccord ne paralyse la société : il organise les décisions importantes, les entrées et sorties d’associés et les situations de blocage. Il est confidentiel, contrairement aux statuts.",
+  },
+  {
+    q: 'Pouvez-vous intervenir sur une structure déjà en place ?',
+    a: 'Oui. Nous partons de l’existant, identifions les points de fragilité (statuts, gouvernance, flux intra-groupe, fiscalité) et proposons un plan de mise à niveau par étapes.',
+  },
+  {
+    q: 'Travaillez-vous avec un avocat ou un notaire ?',
+    a: 'Nous assurons le conseil et la structuration, et nous coordonnons les actes qui relèvent du notaire ou de l’avocat. Vous gardez un interlocuteur unique côté CAF Management.',
+  },
+  {
+    q: 'La convention fiscale France–Maroc entre-t-elle en jeu ?',
+    a: 'Dès qu’il y a des associés ou une société mère en France, oui : elle encadre le traitement des dividendes, des intérêts, des redevances et des prix de transfert. Nous l’intégrons dans le schéma cible.',
+  },
+];
+---
+
+<BaseLayout
+  path="/strategie-juridique"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Stratégie juridique"
+      title="Structurer votre groupe et sécuriser vos choix juridiques"
+      lede="Le bon véhicule, la bonne gouvernance et les bons flux dès le départ — pour ne pas avoir à tout redéfaire au premier tour de table, à la première acquisition ou au premier désaccord entre associés."
+    />
+
+    <Section
+      index="01"
+      eyebrow="Ce que nous couvrons"
+      title="Six leviers de structuration"
+    >
+      <NumberedList items={interventions} />
+    </Section>
+
+    <Section
+      index="02"
+      eyebrow="Quand nous consulter"
+      title="Les moments où la structure se joue"
+      variant="tint"
+    >
+      <DefList items={quand} />
+    </Section>
+
+    <Section index="03" eyebrow="Déroulé" title="Comment se passe une mission" variant="dark">
+      <Steps items={deroule} />
+    </Section>
+
+    <Faq faqs={faqs} title="Stratégie juridique : questions fréquentes" />
+    <RelatedServices current="/strategie-juridique" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

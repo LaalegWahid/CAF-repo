@@ -1,0 +1,54 @@
+---
+interface Props {
+  items: { title: string; body: string }[];
+}
+const { items } = Astro.props;
+---
+
+<dl class="deflist">
+  {
+    items.map((it, i) => (
+      <div data-reveal style={`--reveal-i:${i}`}>
+        <dt>{it.title}</dt>
+        <dd>{it.body}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .deflist {
+    margin: 0;
+  }
+  .deflist > div {
+    padding-block: clamp(1.3rem, 3vw, 1.8rem);
+    border-top: 1px solid var(--line);
+  }
+  .deflist > div:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .deflist > div:last-child {
+    padding-bottom: 0;
+  }
+  dt {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 0.45rem;
+  }
+  dd {
+    margin: 0;
+    max-width: 64ch;
+  }
+  :global(.section--dark) .deflist dt {
+    color: #fff;
+  }
+  :global(.section--dark) .deflist dd {
+    color: rgba(255, 255, 255, 0.72);
+  }
+  :global(.section--dark) .deflist > div {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+</style>
