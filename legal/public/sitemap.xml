@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap: only pages that exist today are listed, so crawlers are
+  not sent to 404s. Add the <url> entries below as the service and resource
+  pages go live, or run `npx astro add sitemap` for automatic generation.
+
+  Pending pages:
+    /services/audit-financier-legal-cac
+    /services/audit-interne
+    /services/audit-consolidation
+    /services/audit-performance
+    /ressources/cac-obligatoire-maroc
+    /ressources/deroule-mission-audit
+    /ressources/normes-isa-marocaines
+    /ressources/comptes-consolides-perimetre-methodes
+    /ressources/cartographie-des-risques
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://audit.cabinet-caf.ma/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://audit.cabinet-caf.ma/mentions-legales</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+</urlset>

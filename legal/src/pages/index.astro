@@ -1,0 +1,337 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE, STATS, SERVICES, GUIDES, FAQ } from "../consts";
+
+const pageTitle = `${SITE.tagline} · ${SITE.name}`;
+const addr = SITE.address;
+const orgId = `${SITE.url}/#organization`;
+
+/* ---------- Structured data (JSON-LD) ---------- */
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "@id": orgId,
+  name: SITE.legalName,
+  alternateName: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/Logo_128x128.png`,
+  image: `${SITE.url}/Logo_128x128.png`,
+  description: SITE.description,
+  email: SITE.email,
+  telephone: SITE.phoneE164,
+  priceRange: "$$$",
+  knowsLanguage: ["fr", "ar"],
+  areaServed: { "@type": "Country", name: addr.countryName },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: addr.street,
+    addressLocality: addr.locality,
+    addressRegion: addr.region,
+    postalCode: addr.postalCode,
+    addressCountry: addr.country,
+  },
+  parentOrganization: {
+    "@type": "Organization",
+    name: "CAF — Expertise sociale & Audit",
+    url: "https://www.cabinet-caf.ma",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Prestations d'audit",
+    itemListElement: [
+      ...SERVICES.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, url: `${SITE.url}${s.href}` },
+      })),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Évaluation, cession & acquisition d'entreprise",
+          url: `${SITE.url}/#evaluation`,
+        },
+      },
+    ],
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE.url}/#website`,
+  url: SITE.url,
+  name: `${SITE.name} — Audit`,
+  inLanguage: "fr-MA",
+  publisher: { "@id": orgId },
+};
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const jsonLd = [organization, website, faqPage];
+
+const serviceIcons: Record<number, string> = {
+  18: `<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="m9 15 2 2 4-4"/>`,
+  14: `<path d="M12 3 4 6v6c0 5 3.4 7.7 8 9 4.6-1.3 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>`,
+  16: `<path d="m12 2 9 5-9 5-9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>`,
+  17: `<path d="M4.5 19a9 9 0 1 1 15 0"/><path d="M12 13V7"/><circle cx="12" cy="13" r="1.4"/>`,
+};
+
+const steps = [
+  {
+    t: "Prise de connaissance & lettre de mission",
+    d: "Compréhension de l'activité, de l'environnement et du contrôle interne ; formalisation du périmètre et des termes de la mission.",
+  },
+  {
+    t: "Planification & appréciation des risques",
+    d: "Identification des risques d'anomalies significatives, détermination du seuil de signification et stratégie d'audit adaptée à l'entité.",
+  },
+  {
+    t: "Contrôles — intérim & final",
+    d: "Tests des contrôles et des opérations courantes en cours d'exercice, puis contrôle des comptes après la clôture.",
+  },
+  {
+    t: "Synthèse, opinion & rapports",
+    d: "Revue indépendante des conclusions, communication au gouvernement d'entreprise, rapport général et rapports spéciaux.",
+  },
+];
+---
+
+<Layout title={pageTitle} path="/" jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__body">
+          <p class="eyebrow">Audit &amp; commissariat aux comptes — Maroc</p>
+          <h1>Certifier vos comptes et sécuriser vos décisions</h1>
+          <p class="lead">
+            Le pôle audit du cabinet CAF : commissariat aux comptes, audit
+            interne, audit de consolidation et audit de performance — conduits
+            selon les normes ISA et marocaines.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Demander une proposition</a>
+            <a class="btn btn--ghost" href="#services">Voir nos audits</a>
+          </div>
+          <ul class="hero__trust">
+            <li>Normes <strong>ISA</strong> &amp; référentiel marocain</li>
+            <li>Dossier de travail <strong>normalisé</strong></li>
+            <li><strong>Indépendance</strong> et revue qualité</li>
+          </ul>
+        </div>
+
+        <div class="hero__media">
+          <div class="hero__viz">
+            <svg viewBox="0 0 420 380" role="img" aria-label="Rapport d'audit certifié : un document accompagné d'un sceau de certification">
+              <rect x="52" y="34" width="212" height="278" rx="6" fill="#f8f8fc" stroke="#e4e5ef" />
+              <rect x="78" y="66" width="132" height="12" rx="3" fill="#b3b3ea" />
+              <rect x="78" y="92" width="160" height="8" rx="3" fill="#eeeefb" />
+              <rect x="78" y="110" width="120" height="8" rx="3" fill="#eeeefb" />
+              <rect x="78" y="146" width="160" height="8" rx="3" fill="#eeeefb" />
+              <rect x="78" y="164" width="150" height="8" rx="3" fill="#eeeefb" />
+              <rect x="78" y="182" width="160" height="8" rx="3" fill="#eeeefb" />
+              <rect x="78" y="200" width="96" height="8" rx="3" fill="#eeeefb" />
+
+              <g transform="translate(288 250)">
+                <g fill="#4747b3">
+                  <rect x="60" y="-6" width="12" height="12" transform="rotate(45 66 0)" />
+                  <rect x="41" y="41" width="12" height="12" transform="rotate(45 47 47)" />
+                  <rect x="-6" y="60" width="12" height="12" transform="rotate(45 0 66)" />
+                  <rect x="-53" y="41" width="12" height="12" transform="rotate(45 -47 47)" />
+                  <rect x="-72" y="-6" width="12" height="12" transform="rotate(45 -66 0)" />
+                  <rect x="-53" y="-53" width="12" height="12" transform="rotate(45 -47 -47)" />
+                  <rect x="-6" y="-72" width="12" height="12" transform="rotate(45 0 -66)" />
+                  <rect x="41" y="-53" width="12" height="12" transform="rotate(45 47 -47)" />
+                </g>
+                <path d="M-14 46 l-9 44 l18 -11 l14 18 l7 -46 z" fill="#393996" />
+                <circle r="52" fill="#4747b3" />
+                <circle r="44" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" />
+                <path d="M-21 2 l13 14 l28 -32" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LE PÔLE EN CHIFFRES ================= -->
+    <section class="section stats" aria-label="Le pôle en chiffres">
+      <div class="container stats__grid">
+        {
+          STATS.map((s) => (
+            <div class="stats__item">
+              <span class="stats__value">{s.value}</span>
+              <span class="stats__label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Nos services</p>
+          <h2>Quatre missions d'audit sous un même toit</h2>
+          <p class="lead">
+            Du commissariat aux comptes à l'audit de performance, chaque mission
+            suit un dossier de travail normé et une revue indépendante des
+            conclusions.
+          </p>
+        </div>
+        <div class="grid grid--2">
+          {
+            SERVICES.map((s) => (
+              <article class="card">
+                <span class="card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[s.id]} />
+                </span>
+                <h3>
+                  <a class="stretched" href={s.href}>{s.title}</a>
+                </h3>
+                <p>{s.desc}</p>
+                <span class="card__link">En savoir plus &rarr;</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOTRE MÉTHODE ================= -->
+    <section class="section" id="methode">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Notre méthode</p>
+          <h2>Une mission d'audit en quatre étapes</h2>
+        </div>
+        <div class="grid grid--4 steps">
+          {
+            steps.map((s) => (
+              <article class="card step">
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESSOURCES / GUIDES ================= -->
+    <section class="section section--alt" id="ressources">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Ressources</p>
+          <h2>Repères sur l'audit et le commissariat aux comptes</h2>
+          <p class="lead">
+            Des guides concrets sur les obligations, le déroulé des missions et
+            les normes applicables au Maroc.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          {
+            GUIDES.map((g) => (
+              <article class="card guide">
+                <h3>
+                  <a class="stretched" href={g.href}>{g.title}</a>
+                </h3>
+                <p>{g.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ÉVALUATION, CESSION & ACQUISITION ================= -->
+    <section class="section" id="evaluation">
+      <div class="container">
+        <div class="panel-dark">
+          <div class="panel-dark__body">
+            <p class="eyebrow">06 — Évaluation &amp; acquisition</p>
+            <h2>Évaluation, cession &amp; acquisition d'entreprise</h2>
+            <p>
+              Pour les acquéreurs, cédants et investisseurs qui doivent répondre
+              à une question simple : combien vaut cette entreprise, et que
+              révèle-t-elle avant un rachat ? Nous menons l'évaluation
+              multi-méthodes et la due diligence d'acquisition, en toute
+              indépendance vis-à-vis de nos mandats d'audit légal.
+            </p>
+            <ul>
+              <li>Acquéreurs préparant un rachat ou une prise de participation</li>
+              <li>Cédants qui veulent objectiver leur prix de cession</li>
+              <li>Investisseurs et fonds réalisant une due diligence</li>
+            </ul>
+            <div class="hero__cta">
+              <a class="btn btn--light" href="#contact">Estimer la valeur</a>
+              <a class="btn btn--outline-light" href="#contact">Lancer une due diligence</a>
+            </div>
+          </div>
+          <aside class="panel-dark__aside">
+            <h3>Méthodes &amp; livrables</h3>
+            <p>
+              Valorisation DCF, multiples de marché et actif net comptable
+              corrigé · revue financière, fiscale et sociale de la cible · note
+              de synthèse des risques · aide à la négociation de la garantie
+              d'actif et de passif.
+            </p>
+            <a href="https://corporate.cabinet-caf.ma">Voir le pôle corporate finance &rarr;</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--alt" id="faq">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Ce que les dirigeants et administrateurs nous demandent</h2>
+        </div>
+        <div class="faq">
+          {
+            FAQ.map((f, i) => (
+              <details open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq__body">{f.a}</div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section" id="contact">
+      <div class="container cta-band">
+        <p class="eyebrow">Contact</p>
+        <h2>Parlons de votre mission d'audit</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">
+          Commissariat aux comptes, audit interne, consolidation, performance ou
+          évaluation : décrivez-nous votre besoin, nous revenons vers vous sous
+          24&nbsp;h ouvrées avec une proposition.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${SITE.email}`}>Écrire au pôle</a>
+          <a class="btn btn--ghost" href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

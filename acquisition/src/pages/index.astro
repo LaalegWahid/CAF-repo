@@ -1,0 +1,328 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE, STATS, SERVICES, GUIDES, FAQ } from "../consts";
+
+const pageTitle = `${SITE.tagline} · ${SITE.name}`;
+const addr = SITE.address;
+const orgId = `${SITE.url}/#organization`;
+
+/* ---------- Structured data (JSON-LD) ---------- */
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": orgId,
+  name: SITE.legalName,
+  alternateName: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/Logo_128x128.png`,
+  image: `${SITE.url}/Logo_128x128.png`,
+  description: SITE.description,
+  email: SITE.email,
+  telephone: SITE.phoneE164,
+  priceRange: "$$$",
+  knowsLanguage: ["fr", "ar"],
+  areaServed: { "@type": "Country", name: addr.countryName },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: addr.street,
+    addressLocality: addr.locality,
+    addressRegion: addr.region,
+    postalCode: addr.postalCode,
+    addressCountry: addr.country,
+  },
+  parentOrganization: {
+    "@type": "Organization",
+    name: "CAF — Expertise sociale & Audit",
+    url: "https://www.cabinet-caf.ma",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Prestations corporate finance",
+    itemListElement: [
+      ...SERVICES.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, url: `${SITE.url}${s.href}` },
+      })),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Financement & trésorerie de l'entreprise",
+          url: `${SITE.url}/#financement`,
+        },
+      },
+    ],
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE.url}/#website`,
+  url: SITE.url,
+  name: `${SITE.name} — Corporate Finance`,
+  inLanguage: "fr-MA",
+  publisher: { "@id": orgId },
+};
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const jsonLd = [organization, website, faqPage];
+
+const serviceIcons: Record<number, string> = {
+  15: `<circle cx="10" cy="10" r="6"/><path d="m20 20-5.2-5.2"/>`,
+  21: `<path d="M12 3 3 7.5V16l9 4.5 9-4.5V7.5L12 3z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/>`,
+};
+
+const steps = [
+  {
+    t: "Cadrage & évaluation",
+    d: "Compréhension de l'activité, retraitements des comptes et valorisation croisée DCF / multiples / ANCC pour poser une fourchette de valeur défendable.",
+  },
+  {
+    t: "Due diligence & data room",
+    d: "Ouverture d'une data room structurée, revue financière, fiscale, sociale et juridique, Q&A avec la partie adverse et note de synthèse des risques.",
+  },
+  {
+    t: "Négociation & closing",
+    d: "Ajustement de prix, rédaction de la garantie d'actif et de passif, levée des conditions suspensives puis transfert des titres.",
+  },
+];
+---
+
+<Layout title={pageTitle} path="/" jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__body">
+          <p class="eyebrow">Corporate finance — Maroc</p>
+          <h1>Évaluer, auditer et transmettre votre entreprise</h1>
+          <p class="lead">
+            Le pôle corporate finance du cabinet CAF : évaluation multi-méthodes,
+            audit d'acquisition, inventaire des actifs et solutions de
+            financement — pour sécuriser vos opérations de haut de bilan.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Prendre rendez-vous</a>
+            <a class="btn btn--ghost" href="#services">Voir nos services</a>
+          </div>
+          <ul class="hero__trust">
+            <li>Valorisation <strong>DCF · multiples · ANCC</strong></li>
+            <li><strong>Data room</strong> &amp; Q&amp;A pilotés</li>
+            <li>Conseil <strong>indépendant</strong>, côté cédant ou acquéreur</li>
+          </ul>
+        </div>
+
+        <div class="hero__media">
+          <div class="hero__viz">
+            <svg viewBox="0 0 440 380" role="img" aria-label="Passage de la valeur comptable à la valeur d'entreprise : cinq barres croissantes et une ligne de tendance">
+              <line x1="34" y1="322" x2="412" y2="322" stroke="#e3ebe9" stroke-width="2" />
+              <rect x="44" y="262" width="48" height="60" rx="4" fill="#a9dcf4" />
+              <rect x="120" y="202" width="48" height="120" rx="4" fill="#3bb0e5" />
+              <rect x="196" y="147" width="48" height="175" rx="4" fill="#1a9dd9" />
+              <rect x="272" y="97" width="48" height="225" rx="4" fill="#12b886" />
+              <rect x="348" y="52" width="48" height="270" rx="4" fill="#0e9d6e" />
+              <polyline
+                points="68,258 144,198 220,143 296,93 372,48"
+                fill="none"
+                stroke="#0f2230"
+                stroke-width="2"
+                stroke-dasharray="5 5"
+                stroke-linecap="round"
+              />
+              <g fill="#0f2230">
+                <circle cx="68" cy="258" r="4" />
+                <circle cx="144" cy="198" r="4" />
+                <circle cx="220" cy="143" r="4" />
+                <circle cx="296" cy="93" r="4" />
+                <circle cx="372" cy="48" r="4" />
+              </g>
+              <text x="34" y="352" font-family="system-ui, sans-serif" font-size="13" fill="#5c6b7a">Valeur comptable</text>
+              <text x="412" y="352" text-anchor="end" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#08543c">Valeur d'entreprise</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LE PÔLE EN CHIFFRES ================= -->
+    <section class="section stats" aria-label="Le pôle en chiffres">
+      <div class="container stats__grid">
+        {
+          STATS.map((s) => (
+            <div class="stats__item">
+              <span class="stats__value">{s.value}</span>
+              <span class="stats__label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Nos services</p>
+          <h2>Deux missions au cœur des opérations de haut de bilan</h2>
+          <p class="lead">
+            De la valorisation à l'inventaire des actifs, chaque mission est
+            menée par des spécialistes de l'évaluation et de l'audit
+            d'acquisition au Maroc.
+          </p>
+        </div>
+        <div class="grid grid--2">
+          {
+            SERVICES.map((s) => (
+              <article class="card">
+                <span class="card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[s.id]} />
+                </span>
+                <h3>
+                  <a class="stretched" href={s.href}>{s.title}</a>
+                </h3>
+                <p>{s.desc}</p>
+                <span class="card__link">En savoir plus &rarr;</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOTRE APPROCHE ================= -->
+    <section class="section" id="approche">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Notre approche</p>
+          <h2>Une opération conduite en trois temps</h2>
+        </div>
+        <div class="grid grid--3 steps">
+          {
+            steps.map((s) => (
+              <article class="card step">
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESSOURCES / GUIDES ================= -->
+    <section class="section section--alt" id="ressources">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Ressources</p>
+          <h2>Repères sur l'évaluation et la transmission</h2>
+          <p class="lead">
+            Des guides concrets pour préparer une cession, une acquisition ou une
+            levée de fonds au Maroc.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          {
+            GUIDES.map((g) => (
+              <article class="card guide">
+                <h3>
+                  <a class="stretched" href={g.href}>{g.title}</a>
+                </h3>
+                <p>{g.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINANCEMENT & TRÉSORERIE ================= -->
+    <section class="section" id="financement">
+      <div class="container">
+        <div class="panel-dark">
+          <div class="panel-dark__body">
+            <p class="eyebrow">07 — Financement</p>
+            <h2>Financement &amp; trésorerie de l'entreprise</h2>
+            <p>
+              Pour les dirigeants et DAF en tension de trésorerie ou en recherche
+              de cash pour investir. Nous cadrons le besoin, construisons le plan
+              de trésorerie et actionnons les bons leviers : crédit-bail,
+              affacturage, mobilisation du poste clients, lignes court terme et
+              restructuration de la dette.
+            </p>
+            <ul>
+              <li>Dirigeants et DAF cherchant à sécuriser la trésorerie</li>
+              <li>Entreprises en croissance à financer (BFR, capex)</li>
+              <li>Sociétés préparant une levée, un rachat ou une transmission</li>
+            </ul>
+            <div class="hero__cta">
+              <a class="btn btn--light" href="#contact">Trouver du financement</a>
+              <a class="btn btn--outline-light" href="#contact">Optimiser ma trésorerie</a>
+            </div>
+          </div>
+          <aside class="panel-dark__aside">
+            <h3>Leviers mobilisés</h3>
+            <p>
+              Crédit-bail (leasing) mobilier et immobilier · affacturage et
+              cession Dailly · escompte et mobilisation de créances · lignes de
+              trésorerie et découvert · rééchelonnement et consolidation de
+              dettes · plan de trésorerie glissant à 13 semaines.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--alt" id="faq">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Ce que les dirigeants nous demandent</h2>
+        </div>
+        <div class="faq">
+          {
+            FAQ.map((f, i) => (
+              <details open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq__body">{f.a}</div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section" id="contact">
+      <div class="container cta-band">
+        <p class="eyebrow">Contact</p>
+        <h2>Parlons de votre opération</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">
+          Cession, acquisition, évaluation, inventaire ou besoin de financement :
+          décrivez-nous votre projet, nous revenons vers vous sous 24&nbsp;h
+          ouvrées.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${SITE.email}`}>Écrire au pôle</a>
+          <a class="btn btn--ghost" href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
