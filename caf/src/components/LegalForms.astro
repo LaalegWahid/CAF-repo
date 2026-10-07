@@ -1,32 +1,31 @@
 ---
 import { legalForms } from '../data/sections';
+import { legalFormsEn } from '../data/en';
+import { langFromUrl, ui } from '../i18n';
+
+const lang = langFromUrl(Astro.url);
+const t = ui(lang).legalForms;
+const rows = lang === 'en' ? legalFormsEn : legalForms;
 ---
 
-<section id="formes" class="section">
+<section id={lang === 'en' ? 'entity-types' : 'formes'} class="section">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">Formes juridiques</p>
-      <h2>Quelle structure pour votre activité au Maroc ?</h2>
-      <p>
-        La SARL couvre la majorité des projets de filiale. La succursale et le bureau de liaison
-        conviennent aux phases de test. Nous tranchons ensemble lors du cadrage.
-      </p>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2>{t.title}</h2>
+      <p>{t.intro}</p>
     </div>
 
-    <div class="table-scroll" role="region" aria-label="Comparatif des formes juridiques" tabindex="0">
+    <div class="table-scroll" role="region" aria-label={t.aria} tabindex="0">
       <table>
         <thead>
           <tr>
-            <th scope="col">Forme</th>
-            <th scope="col">Capital social</th>
-            <th scope="col">Associés</th>
-            <th scope="col">Responsabilité</th>
-            <th scope="col">Idéale pour</th>
+            {t.cols.map((c) => <th scope="col">{c}</th>)}
           </tr>
         </thead>
         <tbody>
           {
-            legalForms.map((f) => (
+            rows.map((f) => (
               <tr>
                 <th scope="row">{f.form}</th>
                 <td>{f.capital}</td>
@@ -40,11 +39,7 @@ import { legalForms } from '../data/sections';
       </table>
     </div>
 
-    <p class="disclaimer">
-      Comparatif simplifié à jour à la date de rédaction. Les seuils, obligations de commissariat aux
-      comptes et régimes sectoriels évoluent — la structure retenue est validée par écrit avant toute
-      formalité.
-    </p>
+    <p class="disclaimer">{t.disclaimer}</p>
   </div>
 </section>
 

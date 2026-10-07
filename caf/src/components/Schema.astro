@@ -1,5 +1,6 @@
 ---
 import { SITE, ORG } from '../consts';
+import { langFromUrl, ui } from '../i18n';
 
 interface QA {
   q: string;
@@ -21,13 +22,14 @@ interface Props {
   breadcrumb?: Crumb[];
 }
 
-const { path = '/', name = SITE.tagline, description = SITE.description, pageType = 'hub', faqs, breadcrumb } =
+const t = ui(langFromUrl(Astro.url));
+const { path = '/', name = t.tagline, description = t.description, pageType = 'hub', faqs, breadcrumb } =
   Astro.props;
 
 const origin = (Astro.site ?? new URL(SITE.url)).origin;
 const pageUrl = new URL(path, origin + '/').href;
 const cabinetId = `${origin}/#cabinet`;
-const websiteId = `${origin}/#website`;
+const websiteId = new URL(t.home, origin + '/').href + '#website';
 
 const graph: Record<string, unknown>[] = [
   {
@@ -41,10 +43,7 @@ const graph: Record<string, unknown>[] = [
     telephone: ORG.phone,
     priceRange: '€€',
     image: new URL(SITE.ogImage, origin + '/').href,
-    areaServed: [
-      { '@type': 'Country', name: 'Maroc' },
-      { '@type': 'Country', name: 'France' },
-    ],
+    areaServed: t.areaServed.map((c) => ({ '@type': 'Country', name: c })),
     knowsLanguage: ['fr', 'en'],
     address: {
       '@type': 'PostalAddress',
@@ -69,8 +68,8 @@ const graph: Record<string, unknown>[] = [
     '@type': 'WebSite',
     '@id': websiteId,
     url: origin + '/',
-    name: `${SITE.name} — ${SITE.tagline}`,
-    inLanguage: 'fr-FR',
+    name: `${SITE.name} — ${t.tagline}`,
+    inLanguage: t.schemaLang,
     publisher: { '@id': cabinetId },
   },
   {
@@ -80,13 +79,13 @@ const graph: Record<string, unknown>[] = [
     name,
     isPartOf: { '@id': websiteId },
     about: { '@id': cabinetId },
-    inLanguage: 'fr-FR',
+    inLanguage: t.schemaLang,
     description,
   },
 ];
 
 const crumbs: Crumb[] = breadcrumb ?? [
-  { name: 'Accueil', item: origin + '/' },
+  { name: t.crumbHome, item: new URL(t.home, origin + '/').href },
   { name },
 ];
 graph.push({
@@ -108,8 +107,8 @@ if (pageType === 'service') {
     serviceType: name,
     description,
     provider: { '@id': cabinetId },
-    areaServed: { '@type': 'Country', name: 'Maroc' },
-    audience: { '@type': 'BusinessAudience', name: 'Entreprises et groupes opérant au Maroc' },
+    areaServed: { '@type': 'Country', name: t.serviceArea },
+    audience: { '@type': 'BusinessAudience', name: t.audience },
   });
 }
 

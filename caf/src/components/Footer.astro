@@ -1,6 +1,10 @@
 ---
-import { ORG, NAV, SITE } from '../consts';
+import { ORG, SITE } from '../consts';
+import { langFromUrl, navFor, ui } from '../i18n';
 import Particles from './Particles.astro';
+const lang = langFromUrl(Astro.url);
+const t = ui(lang).footer;
+const NAV = navFor(lang);
 const year = new Date().getFullYear();
 ---
 
@@ -13,8 +17,7 @@ const year = new Date().getFullYear();
         <span>CAF Management</span>
       </div>
       <p>
-        Cabinet d’expertise comptable et de conseil juridique à Casablanca depuis {ORG.foundingYear}.
-        Nous accompagnons les entreprises qui créent, structurent et développent leur activité au Maroc.
+        {t.about(ORG.foundingYear)}
       </p>
       <div class="social">
         <a href={ORG.linkedin} rel="noopener" target="_blank">LinkedIn</a>
@@ -22,29 +25,29 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <nav class="col" aria-label="Sur ce site">
-      <h2>Expertises juridiques</h2>
+    <nav class="col" aria-label={t.onSite}>
+      <h2>{t.expertise}</h2>
       <ul>
-        {NAV.filter((i) => i.href !== '/').map((i) => <li><a href={i.href}>{i.label}</a></li>)}
-        <li><a href="#contact">Contact</a></li>
+        {NAV.filter((i) => i.href !== '/' && i.href !== '/en/').map((i) => <li><a href={i.href}>{i.label}</a></li>)}
+        <li><a href="#contact">{t.contact}</a></li>
       </ul>
     </nav>
 
-    <nav class="col" aria-label="Le cabinet">
-      <h2>Le cabinet</h2>
+    <nav class="col" aria-label={t.firm}>
+      <h2>{t.firm}</h2>
       <ul>
-        <li><a href={ORG.parentSite} rel="noopener" target="_blank">Site principal — caf.ma</a></li>
-        <li><a href={`${ORG.parentSite}/services/`} rel="noopener" target="_blank">Nos services</a></li>
-        <li><a href={`${ORG.parentSite}/qui-sommes-nous/`} rel="noopener" target="_blank">Qui sommes-nous</a></li>
-        <li><a href={`${ORG.parentSite}/blog/`} rel="noopener" target="_blank">Blog</a></li>
+        <li><a href={ORG.parentSite} rel="noopener" target="_blank">{t.mainSite}</a></li>
+        <li><a href={`${ORG.parentSite}/services/`} rel="noopener" target="_blank">{t.services}</a></li>
+        <li><a href={`${ORG.parentSite}/qui-sommes-nous/`} rel="noopener" target="_blank">{t.about2}</a></li>
+        <li><a href={`${ORG.parentSite}/blog/`} rel="noopener" target="_blank">{t.blog}</a></li>
       </ul>
     </nav>
 
     <div class="col">
-      <h2>Contact</h2>
+      <h2>{t.contact}</h2>
       <address>
         <a href={ORG.mapsUrl} rel="noopener" target="_blank">
-          {ORG.street}<br />{ORG.locality} — {ORG.postalCode}, {ORG.countryName}
+          {ORG.street}<br />{ORG.locality} — {ORG.postalCode}, {ui(lang).country}
         </a>
         <a href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
         <a href={`mailto:${ORG.email}`}>{ORG.email}</a>
@@ -53,12 +56,12 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="wrap legal">
-    <p>© {year} {SITE.name}. Tous droits réservés. Ce site est édité par {SITE.name}.</p>
+    <p>© {year} {SITE.name}. {t.rights(SITE.name)}</p>
     <p>
-      <a href={`${ORG.parentSite}/conditions-generales/`} rel="noopener" target="_blank">Conditions générales</a>
+      <a href={`${ORG.parentSite}/conditions-generales/`} rel="noopener" target="_blank">{t.terms}</a>
       <span aria-hidden="true">·</span>
       <a href={`${ORG.parentSite}/politique-de-confidentialite/`} rel="noopener" target="_blank"
-        >Politique de confidentialité</a
+        >{t.privacy}</a
       >
     </p>
   </div>

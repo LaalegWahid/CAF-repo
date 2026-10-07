@@ -16,6 +16,25 @@ naturels dans le pied de page.
 | `/veille-conformite-juridique` | Veille réglementaire, cartographie des obligations, mise en conformité |
 | `/deploiement-a-letranger` | Filiales à l'étranger : change, constitution locale, consolidation, prix de transfert |
 
+## Version anglaise (`/en/`)
+
+Version destinée aux entreprises **britanniques et américaines** qui s'implantent au Maroc
+(contenu adapté, pas une traduction littérale : accords de libre-échange US/UK, conventions
+fiscales UK/US, fuseau horaire, documents apostillés…).
+
+| Route | Équivalent FR |
+|---|---|
+| `/en/` | `/` |
+| `/en/company-formation-morocco` | `/creation-de-societe` |
+| `/en/corporate-structuring` | `/strategie-juridique` |
+| `/en/corporate-secretarial` | `/droit-des-societes` |
+| `/en/regulatory-compliance` | `/veille-conformite-juridique` |
+| `/en/africa-expansion` | — (page propre : le Maroc comme base vers l'Afrique) |
+
+La langue est déduite de l'URL (`src/i18n.ts`) : les composants partagés (header, footer,
+contact, FAQ…) basculent seuls en anglais sous `/en/`. Textes d'interface et paires FR ↔ EN
+(hreflang + sélecteur de langue) dans `src/i18n.ts`, contenus longs dans `src/data/en.ts`.
+
 ## Stack
 
 | | |

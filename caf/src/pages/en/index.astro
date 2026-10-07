@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import DefList from '../../components/DefList.astro';
+import Steps from '../../components/Steps.astro';
+import Faq from '../../components/Faq.astro';
+import Contact from '../../components/Contact.astro';
+import ServiceIndex from '../../components/ServiceIndex.astro';
+import { valuePropsEn, stepsEn, hubFaqsEn } from '../../data/en';
+
+const description =
+  'Casablanca accounting and legal advisory firm since 1995. We help UK and US companies set up in Morocco: company formation, group structuring, corporate law, compliance and expansion into Africa.';
+---
+
+<BaseLayout path="/en/" title="Set up your company in Morocco" description={description} pageType="hub" faqs={hubFaqsEn}>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Legal advisory · Casablanca · since 1995"
+      title="Set up, structure and grow your company in Morocco"
+      lede="CAF Management guides UK and US businesses through every legal step in Morocco: incorporation, structuring, company secretarial work, regulatory compliance and expansion into Africa. One English-speaking point of contact, on the ground in Casablanca."
+      secondary={{ label: 'Our services', href: '#services' }}
+      facts={[
+        ['Since', '1995'],
+        ['Four departments', 'Accounting · Advisory · Audit · Payroll'],
+        ['Network', 'Member of Execor'],
+        ['Based in', 'Casablanca'],
+      ]}
+    />
+
+    <Section
+      id="services"
+      index="01"
+      eyebrow="Services"
+      title="Five services, one point of contact"
+      intro="Use any of them on its own or as part of a complete set-up package."
+    >
+      <ServiceIndex />
+    </Section>
+
+    <Section index="02" eyebrow="Why Morocco" title="A gateway between Europe, Africa and the Americas" variant="tint">
+      <DefList items={valuePropsEn} />
+      <p class="disclaimer">
+        General information, accurate at the time of writing. It is not personalised legal or tax
+        advice: every situation is confirmed during the scoping call.
+      </p>
+    </Section>
+
+    <Section
+      index="03"
+      eyebrow="How we work"
+      title="From first call to a trading company"
+      intro="A free scoping call, a written timeline, and a progress update at every milestone."
+      variant="dark"
+    >
+      <Steps items={stepsEn} />
+    </Section>
+
+    <Faq faqs={hubFaqsEn} title="Common questions about working with us" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,7 +1,11 @@
 ---
 import { ORG, FORM_ENDPOINT } from '../consts';
+import { langFromUrl, ui, HOURS_EN } from '../i18n';
 import Particles from './Particles.astro';
 
+const lang = langFromUrl(Astro.url);
+const t = ui(lang).contact;
+const hours = lang === 'en' ? HOURS_EN : ORG.hoursDisplay;
 const usingEndpoint = FORM_ENDPOINT.length > 0;
 const action = usingEndpoint ? FORM_ENDPOINT : `mailto:${ORG.email}`;
 const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plain';
@@ -12,31 +16,30 @@ const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plai
   <div class="wrap inner">
     <div class="pitch" data-reveal>
       <p class="eyebrow">Contact</p>
-      <h2>Parlons de votre projet d’implantation</h2>
+      <h2>{t.title}</h2>
       <p class="lede">
-        Un entretien de cadrage de 30 minutes, sans engagement, pour évaluer la forme juridique adaptée,
-        le calendrier réaliste et le budget à prévoir.
+        {t.lede}
       </p>
 
       <ul class="coords">
         <li>
-          <span>Téléphone</span>
+          <span>{t.phone}</span>
           <a href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
         </li>
         <li>
-          <span>E-mail</span>
+          <span>{t.email}</span>
           <a href={`mailto:${ORG.email}`}>{ORG.email}</a>
         </li>
         <li>
-          <span>Bureaux</span>
+          <span>{t.office}</span>
           <a href={ORG.mapsUrl} rel="noopener" target="_blank">
             {ORG.street}, {ORG.locality} — {ORG.postalCode}
           </a>
         </li>
         <li>
-          <span>Horaires</span>
+          <span>{t.hours}</span>
           <div>
-            {ORG.hoursDisplay.map(([d, h]) => <p>{d} : {h}</p>)}
+            {hours.map(([d, h]) => <p>{d}{lang === 'en' ? ':' : ' :'} {h}</p>)}
           </div>
         </li>
       </ul>
@@ -45,38 +48,37 @@ const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plai
     <form class="form" action={action} method="post" enctype={enctype} data-reveal style="--reveal-i:1">
       {!usingEndpoint && (
         <p class="form-note">
-          Formulaire en mode e-mail. Pour un envoi fluide, renseignez FORM_ENDPOINT dans
-          src/consts.ts (Formspree, Web3Forms, Vercel Forms…).
+          {t.formNote}
         </p>
       )}
 
       <div class="field">
-        <label for="nom">Nom et prénom</label>
+        <label for="nom">{t.name}</label>
         <input id="nom" name="nom" type="text" autocomplete="name" required />
       </div>
       <div class="two">
         <div class="field">
-          <label for="email">E-mail professionnel</label>
+          <label for="email">{t.workEmail}</label>
           <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
         <div class="field">
-          <label for="tel">Téléphone</label>
+          <label for="tel">{t.phone}</label>
           <input id="tel" name="telephone" type="tel" autocomplete="tel" />
         </div>
       </div>
       <div class="field">
-        <label for="societe">Société</label>
+        <label for="societe">{t.company}</label>
         <input id="societe" name="societe" type="text" autocomplete="organization" />
       </div>
       <div class="field">
-        <label for="message">Votre projet</label>
-        <textarea id="message" name="message" rows="4" placeholder="Activité, calendrier souhaité, effectif envisagé au Maroc…"></textarea>
+        <label for="message">{t.project}</label>
+        <textarea id="message" name="message" rows="4" placeholder={t.placeholder}></textarea>
       </div>
       <label class="consent">
         <input type="checkbox" name="consentement" required />
-        <span>J’accepte que ces informations soient utilisées pour être recontacté(e) au sujet de ma demande.</span>
+        <span>{t.consent}</span>
       </label>
-      <button class="btn btn--primary" type="submit">Demander un rendez-vous</button>
+      <button class="btn btn--primary" type="submit">{t.submit}</button>
     </form>
   </div>
 </section>

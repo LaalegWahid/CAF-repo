@@ -1,17 +1,25 @@
 ---
-import { NAV, SERVICES, ORG, CTA_HREF, SITE } from '../consts';
+import { ORG, CTA_HREF, SITE } from '../consts';
+import { langFromUrl, servicesFor, navFor, alternatesFor, ui } from '../i18n';
 
+const lang = langFromUrl(Astro.url);
+const t = ui(lang);
+const SERVICES = servicesFor(lang);
+const NAV = navFor(lang);
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) => current === (href.replace(/\/+$/, '') || '/');
+const other = lang === 'en' ? 'fr' : 'en';
+const switchHref = alternatesFor(current)[other] ?? ui(other).home;
 ---
 
 <header class="hdr" data-header>
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label={`${SITE.name} — accueil`}>
+    <a class="brand" href={t.home} aria-label={`${SITE.name} — ${t.homeLabel}`}>
       <img class="brand-mark" src="/logo.svg" width="52" height="40" alt="" />
       <span class="brand-text">CAF <span>Management</span></span>
     </a>
 
-    <nav class="nav nav--desktop" aria-label="Navigation principale">
+    <nav class="nav nav--desktop" aria-label={t.mainNav}>
       {
         SERVICES.map((s) => (
           <a href={s.slug} aria-current={current === s.slug ? 'page' : undefined}>
@@ -23,23 +31,25 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
 
     <div class="actions">
       <a class="tel" href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
-      <a class="btn btn--primary btn--sm" href={CTA_HREF}>Prendre rendez-vous</a>
+      <a class="lang" href={switchHref} hreflang={other} lang={other} aria-label={t.switchAria}>{other.toUpperCase()}</a>
+      <a class="btn btn--primary btn--sm" href={CTA_HREF}>{t.cta}</a>
     </div>
 
     <details class="nav--mobile">
-      <summary aria-label="Ouvrir le menu">
+      <summary aria-label={t.openMenu}>
         <span></span><span></span><span></span>
       </summary>
-      <nav aria-label="Navigation principale">
+      <nav aria-label={t.mainNav}>
         {
           NAV.map((i) => (
-            <a href={i.href} aria-current={current === i.href ? 'page' : undefined}>
+            <a href={i.href} aria-current={isCurrent(i.href) ? 'page' : undefined}>
               {i.label}
             </a>
           ))
         }
         <a class="tel" href={`tel:${ORG.phone}`}>{ORG.phoneDisplay}</a>
-        <a class="btn btn--primary btn--sm" href={CTA_HREF}>Prendre rendez-vous</a>
+        <a href={switchHref} hreflang={other} lang={other}>{t.switchLabel}</a>
+        <a class="btn btn--primary btn--sm" href={CTA_HREF}>{t.cta}</a>
       </nav>
     </details>
   </div>
@@ -142,6 +152,19 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
   }
   .actions .tel:hover {
     color: var(--navy);
+  }
+  .actions .lang {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+  .actions .lang:hover {
+    background: var(--blue-050);
   }
 
   .nav--mobile {

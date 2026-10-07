@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import NumberedList from '../../components/NumberedList.astro';
+import DefList from '../../components/DefList.astro';
+import Steps from '../../components/Steps.astro';
+import Faq from '../../components/Faq.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import Contact from '../../components/Contact.astro';
+
+const title = 'Expanding into Africa from Morocco';
+const description =
+  'Use your Moroccan company as a regional hub for Africa: choice of country, foreign exchange approvals, local incorporation, consolidation and transfer pricing, with local partners on the ground.';
+
+const scope = [
+  {
+    title: 'Choice of country and entry mode',
+    body: 'Subsidiary, branch, representative office or joint venture, depending on the target market, local tax and how much commitment you want.',
+  },
+  {
+    title: 'Foreign exchange approvals',
+    body: 'A Moroccan company investing abroad files with the Foreign Exchange Office (Office des Changes). We prepare the file and organise the return of dividends.',
+  },
+  {
+    title: 'Local incorporation',
+    body: 'Registration in the target country with our Execor network correspondents on the ground.',
+  },
+  {
+    title: 'Consolidation',
+    body: 'Bringing the new subsidiary into your consolidated accounts: scope, harmonisation adjustments and currency translation, ready for your UK or US group reporting.',
+  },
+  {
+    title: 'Transfer pricing & tax treaties',
+    body: 'Intra-group pricing policy, supporting documentation, and relief from double taxation under the treaties Morocco has signed.',
+  },
+  {
+    title: 'Group reporting',
+    body: 'A single reporting format between your Moroccan hub and its African subsidiaries, consolidated every month.',
+  },
+];
+
+const markets = [
+  { title: 'West Africa', body: 'WAEMU zone: a common currency, harmonised OHADA business law and growing markets.' },
+  { title: 'Central Africa', body: 'CEMAC zone, also under OHADA law.' },
+  { title: 'Gulf states', body: 'United Arab Emirates and Saudi Arabia, for services and trading.' },
+  { title: 'Europe', body: 'Spain and France, close by, for companies serving both sides of the Mediterranean.' },
+];
+
+const process = [
+  { when: 'Weeks 1 – 2', title: 'Scoping', body: 'Target market, entry mode, budget and timeline; first view of tax and regulatory issues.' },
+  { when: 'Weeks 3 – 4', title: 'Exchange control approval', body: 'Preparing and filing the outbound investment file with the Foreign Exchange Office.' },
+  { when: 'Months 2 – 3', title: 'Local incorporation', body: 'Setting up the entity with the local correspondent, bank account, first local filings.' },
+  { when: 'Then', title: 'Group integration', body: 'Reporting, consolidation and transfer pricing policy in place.' },
+];
+
+const faqs = [
+  {
+    q: 'Why use Morocco as a base for Africa?',
+    a: 'Casablanca is a major financial and transport hub for French-speaking Africa, Moroccan banks and companies are widely established south of the Sahara, and Morocco has an extensive network of agreements across the continent. Many UK and US groups run their African operations from a Moroccan regional hub.',
+  },
+  {
+    q: 'Does a Moroccan subsidiary need approval to invest in another African country?',
+    a: 'Yes. Investments abroad by Moroccan resident companies, including subsidiaries of foreign groups, are governed by foreign exchange rules and go through a file with the Foreign Exchange Office. We prepare and follow it for you.',
+  },
+  {
+    q: 'Do you work with local firms in the target country?',
+    a: 'Yes. CAF Management is a member of the Execor international network: we rely on a local correspondent for incorporation, accounting and tax in the new country, while coordination stays with us in Casablanca.',
+  },
+  {
+    q: 'Do we need a transfer pricing policy from the first subsidiary?',
+    a: 'As soon as there are flows between the Moroccan hub and the new subsidiary (sales, services, royalties, financing), yes: a documented policy protects the group on both sides of the border.',
+  },
+];
+---
+
+<BaseLayout
+  path="/en/africa-expansion"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Africa expansion"
+      title="Use Morocco as your springboard into Africa"
+      lede="Choice of country, exchange control approvals, local incorporation, consolidation and transfer pricing: we help groups expand from their Moroccan base into West Africa, Central Africa and the Gulf, with a correspondent on the ground."
+    />
+
+    <Section index="01" eyebrow="What we handle" title="From decision to consolidated reporting">
+      <NumberedList items={scope} />
+    </Section>
+
+    <Section index="02" eyebrow="Common markets" title="Where our clients expand" variant="tint">
+      <DefList items={markets} />
+    </Section>
+
+    <Section index="03" eyebrow="Process" title="The main stages of a project" variant="dark">
+      <Steps items={process} />
+    </Section>
+
+    <Faq faqs={faqs} title="Africa expansion: common questions" />
+    <RelatedServices current="/en/africa-expansion" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

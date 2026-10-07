@@ -1,0 +1,17 @@
+# Dependencies and package-manager caches
+node_modules/
+.pnpm-store/
+.npm-cache/
+
+# Build output
+dist/
+.astro/
+.vercel/
+
+# Logs and local files
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

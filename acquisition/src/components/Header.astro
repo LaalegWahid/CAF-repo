@@ -1,14 +1,25 @@
 ---
 import { SITE } from "../consts";
+
+interface Props {
+  lang?: "fr" | "en";
+  /** Path of this page in the other language, for the switcher. */
+  switchTo?: string;
+}
+const { lang = "fr", switchTo } = Astro.props;
+const en = lang === "en";
+const home = en ? "/en/" : "/";
+const otherLang = en ? "fr" : "en";
+const otherHref = switchTo ?? (en ? "/" : "/en/");
 ---
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="/" aria-label={`${SITE.name} — accueil`}>
+    <a class="brand" href={home} aria-label={`${SITE.name} — ${en ? "home" : "accueil"}`}>
       <img src="/Logo_128x128.png" alt="" width="34" height="34" />
       <span>
         {SITE.name}
-        <small>Corporate finance &amp; transmission</small>
+        <small>{en ? "Corporate finance &amp; M&amp;A" : "Corporate finance &amp; transmission"}</small>
       </span>
     </a>
 
@@ -23,13 +34,27 @@ import { SITE } from "../consts";
         <span>Menu</span>
       </label>
 
-      <nav class="nav" aria-label="Navigation principale">
-        <a href="/#services">Services</a>
-        <a href="/#ressources">Ressources</a>
-        <a href="/#financement">Financement</a>
-        <a href="/#faq">FAQ</a>
-        <a class="btn btn--primary" href="/#contact">Prendre rendez-vous</a>
-      </nav>
+      {
+        en ? (
+          <nav class="nav" aria-label="Main navigation">
+            <a href="/en/#services">Services</a>
+            <a href="/en/#resources">Resources</a>
+            <a href="/en/#financing">Financing</a>
+            <a href="/en/#faq">FAQ</a>
+            <a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label="Lire ce site en français">FR</a>
+            <a class="btn btn--primary" href="/en/#contact">Book a call</a>
+          </nav>
+        ) : (
+          <nav class="nav" aria-label="Navigation principale">
+            <a href="/#services">Services</a>
+            <a href="/#ressources">Ressources</a>
+            <a href="/#financement">Financement</a>
+            <a href="/#faq">FAQ</a>
+            <a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label="Read this site in English">EN</a>
+            <a class="btn btn--primary" href="/#contact">Prendre rendez-vous</a>
+          </nav>
+        )
+      }
     </div>
   </div>
 </header>

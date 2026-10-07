@@ -1,18 +1,20 @@
 ---
-import { SERVICES } from '../consts';
+import { langFromUrl, servicesFor, ui } from '../i18n';
 
 interface Props {
   current: string;
 }
 const { current } = Astro.props;
-const items = SERVICES.filter((s) => s.slug !== current);
+const lang = langFromUrl(Astro.url);
+const t = ui(lang);
+const items = servicesFor(lang).filter((s) => s.slug !== current);
 ---
 
 <section class="section section--tint">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <p class="eyebrow">Autres expertises</p>
-      <h2>Le reste de l’accompagnement juridique</h2>
+      <p class="eyebrow">{t.relatedEyebrow}</p>
+      <h2>{t.relatedTitle}</h2>
     </div>
 
     <ul class="rel">

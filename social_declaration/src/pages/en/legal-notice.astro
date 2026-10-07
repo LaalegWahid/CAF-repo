@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE } from "../../consts";
+import { SITE_EN } from "../../consts.en";
+const addr = SITE.address;
+---
+
+<Layout
+  title="Legal notice"
+  description={`Legal notice for the ${SITE_EN.legalName} website.`}
+  path="/en/legal-notice"
+  lang="en"
+  alternates={{ fr: "/mentions-legales", en: "/en/legal-notice" }}
+  noindex={true}
+>
+  <Header lang="en" switchTo="/mentions-legales" />
+  <main id="main" class="section">
+    <div class="container" style="max-width:760px">
+      <h1>Legal notice</h1>
+      <p>
+        This website is published by <strong>{SITE_EN.legalName}</strong>, a payroll, HR and audit firm,
+        based in {addr.locality}, Morocco.
+      </p>
+      <h2>Publisher</h2>
+      <p>
+        {SITE_EN.legalName}<br />
+        {addr.street}, {addr.postalCode} {addr.locality}, Morocco<br />
+        Phone: <a href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a><br />
+        Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+      <h2>Hosting</h2>
+      <p>To be completed with your hosting provider's details.</p>
+      <h2>Intellectual property</h2>
+      <p>
+        All content on this website is protected. Any reproduction without
+        prior permission is prohibited.
+      </p>
+      <h2>General information only</h2>
+      <p>
+        The content of this website is general information about Moroccan
+        law and practice. It is not legal, tax or accounting advice for your
+        specific situation.
+      </p>
+      <p><a href="/en/">&larr; Back to home</a></p>
+    </div>
+  </main>
+  <Footer lang="en" />
+</Layout>

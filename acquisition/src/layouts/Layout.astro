@@ -11,6 +11,10 @@ interface Props {
   image?: string;
   /** Extra JSON-LD objects to inject in <head>. */
   jsonLd?: Record<string, unknown>[];
+  /** Page language: "fr" (default) or "en" for pages under /en/. */
+  lang?: "fr" | "en";
+  /** Paths of this page in each language, for hreflang tags. */
+  alternates?: { fr?: string; en?: string };
   /** Set true on pages that should not be indexed. */
   noindex?: boolean;
 }
@@ -22,15 +26,19 @@ const {
   image = SITE.ogImage,
   jsonLd = [],
   noindex = false,
+  lang = "fr",
+  alternates,
 } = Astro.props;
 
 const canonical = new URL(path, SITE.url).href;
+const alt = alternates ?? (lang === "fr" ? { fr: path } : { en: path });
+const xDefault = new URL(alt.fr ?? alt.en ?? path, SITE.url).href;
 const imageUrl = new URL(image, SITE.url).href;
 const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`;
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={lang === "en" ? "en" : SITE.lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,8 +54,9 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`
     <meta name="theme-color" content="#0e9d6e" />
     <meta name="generator" content={Astro.generator} />
 
-    <link rel="alternate" hreflang="fr-ma" href={canonical} />
-    <link rel="alternate" hreflang="x-default" href={canonical} />
+    {alt.fr && <link rel="alternate" hreflang="fr-ma" href={new URL(alt.fr, SITE.url).href} />}
+    {alt.en && <link rel="alternate" hreflang="en" href={new URL(alt.en, SITE.url).href} />}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
 
     <link rel="icon" type="image/png" sizes="128x128" href="/Logo_128x128.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -57,7 +66,7 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:locale" content={lang === "en" ? "en_GB" : SITE.locale} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -65,14 +74,14 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${SITE.legalName} — ${SITE.tagline}`} />
+    <meta property="og:image:alt" content={lang === "en" ? fullTitle : `${SITE.legalName} — ${SITE.tagline}`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="twitter:image:alt" content={`${SITE.legalName} — ${SITE.tagline}`} />
+    <meta name="twitter:image:alt" content={lang === "en" ? fullTitle : `${SITE.legalName} — ${SITE.tagline}`} />
 
     {
       jsonLd.map((data) => (
@@ -81,7 +90,7 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`
     }
   </head>
   <body>
-    <a class="skip-link" href="#main">Aller au contenu</a>
+    <a class="skip-link" href="#main">{lang === "en" ? "Skip to content" : "Aller au contenu"}</a>
     <slot />
   </body>
 </html>

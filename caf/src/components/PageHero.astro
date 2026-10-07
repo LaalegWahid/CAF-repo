@@ -1,5 +1,6 @@
 ---
 import { CTA_HREF } from '../consts';
+import { langFromUrl, ui } from '../i18n';
 import Particles from './Particles.astro';
 
 interface Props {
@@ -15,7 +16,7 @@ const {
   eyebrow,
   title,
   lede,
-  primary = { label: 'Prendre rendez-vous', href: CTA_HREF },
+  primary = { label: ui(langFromUrl(Astro.url)).cta, href: CTA_HREF },
   secondary,
   facts,
 } = Astro.props;
