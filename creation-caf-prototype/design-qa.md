@@ -2,9 +2,9 @@
 
 ## Evidence
 
-- Source visual truth: `C:\Users\sohai\Desktop\caf-managment\tmp\pdfs\invest-morocco\page-1.jpg`
-- Browser-rendered implementation: `C:\Users\sohai\Desktop\caf-managment\creation-caf-prototype\design-qa-implementation.png`
-- Combined comparison input: `C:\Users\sohai\Desktop\caf-managment\creation-caf-prototype\design-qa-comparison.png`
+- Source visual truth: `content/source/pdf-pages/invest-morocco/page-1.jpg`
+- Browser-rendered implementation: `design-qa-implementation.png`
+- Combined comparison input: `design-qa-comparison.png`
 - Source pixels: 1867 × 1050.
 - Implementation pixels and CSS viewport: 1265 × 710 at device scale factor 1.
 - Comparison normalization: source was downsampled to 1265 × 710 and placed beside the implementation at the same rendered pixel size. The source is a presentation reference rather than a page mock, so the comparison evaluates visual language and hierarchy rather than identical component placement.
