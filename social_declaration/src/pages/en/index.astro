@@ -1,0 +1,334 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE } from "../../consts";
+import { SITE_EN, STATS_EN as STATS, SERVICES_EN as SERVICES, GUIDES_EN as GUIDES, FAQ_EN as FAQ } from "../../consts.en";
+
+const pageTitle = `${SITE_EN.tagline} · ${SITE.name}`;
+const addr = SITE.address;
+const pageUrl = `${SITE.url}/en/`;
+
+/* ---------- Structured data (JSON-LD) ---------- */
+const orgId = `${SITE.url}/#organization`;
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "AccountingService",
+  "@id": orgId,
+  name: SITE_EN.legalName,
+  alternateName: SITE.name,
+  url: pageUrl,
+  logo: `${SITE.url}/Logo_128x128.png`,
+  image: `${SITE.url}/Logo_128x128.png`,
+  description: SITE_EN.description,
+  email: SITE.email,
+  telephone: SITE.phoneE164,
+  priceRange: "$$",
+  knowsLanguage: ["en", "fr", "ar"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: addr.street,
+    addressLocality: addr.locality,
+    addressRegion: addr.region,
+    postalCode: addr.postalCode,
+    addressCountry: addr.country,
+  },
+  areaServed: { "@type": "Country", name: "Morocco" },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Services",
+    itemListElement: [
+      ...SERVICES.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, url: `${pageUrl}#services` },
+      })),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Statutory audit",
+          url: `${pageUrl}#statutory-audit`,
+        },
+      },
+    ],
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${pageUrl}#website`,
+  url: pageUrl,
+  name: `${SITE.name} — Payroll & HR`,
+  inLanguage: "en",
+  publisher: { "@id": orgId },
+};
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const jsonLd = [organization, website, faqPage];
+
+const serviceIcons: Record<number, string> = {
+  22: `<path d="M3 10h18M7 15h4M3 6h18v12H3z"/>`,
+  23: `<circle cx="9" cy="8" r="3"/><path d="M15 11a3 3 0 1 0 0-6M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1M17 15a5 5 0 0 1 5 5v1"/>`,
+  24: `<path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2M9 3h6v3H9zM9 12h6M9 16h4"/>`,
+  20: `<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>`,
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={SITE_EN.description}
+  path="/en/"
+  lang="en"
+  alternates={{ fr: "/", en: "/en/" }}
+  jsonLd={jsonLd}
+>
+  <Header lang="en" switchTo="/" />
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__body">
+          <p class="eyebrow">Payroll &amp; HR for your Moroccan team</p>
+          <h1>Moroccan payroll, HR compliance and statutory audit, handled in English</h1>
+          <p class="lead">
+            Hiring in Morocco from the UK or the US? We run your local payroll
+            (CNSS, AMO, income tax), HR administration, employment contracts and
+            HR compliance audits, and provide the statutory audit if your
+            subsidiary needs one. You get reports in English and a single point
+            of contact in Casablanca.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Get a quote</a>
+            <a class="btn btn--ghost" href="#services">See our services</a>
+          </div>
+          <ul class="hero__trust">
+            <li>Online filings via <strong>Damancom</strong>: CNSS, AMO, income tax</li>
+            <li>Compliant with the Moroccan <strong>Labour Code</strong></li>
+            <li>Chartered accountant &amp; <strong>statutory auditor</strong></li>
+          </ul>
+        </div>
+        <div class="hero__media">
+          <figure class="hero__figure">
+            <img
+              src="/images/hero-conseil-paie.webp"
+              alt="CAF payroll adviser reviewing a payslip and a CNSS spreadsheet in an office in Casablanca"
+              width="1024"
+              height="1271"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= KEY FIGURES ================= -->
+    <section class="section stats" aria-label="The firm in figures">
+      <div class="container stats__grid">
+        {
+          STATS.map((s) => (
+            <div class="stats__item">
+              <span class="stats__value">{s.value}</span>
+              <span class="stats__label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Our services</p>
+          <h2>A complete local payroll and HR function for your Moroccan entity</h2>
+          <p class="lead">
+            Moroccan employment rules, social security and payroll tax differ
+            sharply from UK PAYE or US payroll. Our specialists handle every
+            step, from payslips to contracts, so your head office does not have to.
+          </p>
+        </div>
+        <figure class="section__figure">
+          <img
+            src="/images/equipe-cabinet-social.webp"
+            alt="CAF payroll and social security consultants working together on a client file"
+            width="1600"
+            height="893"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="grid grid--2">
+          {
+            SERVICES.map((s) => (
+              <article class="card">
+                <span class="card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[s.id]} />
+                </span>
+                <h3>
+                  <a class="stretched" href="#contact">{s.title}</a>
+                </h3>
+                <p>{s.desc}</p>
+                <span class="card__link">Discuss your needs &rarr;</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESOURCES ================= -->
+    <section class="section" id="resources">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Resources</p>
+          <h2>Moroccan payroll and employment law, explained</h2>
+          <p class="lead">
+            The topics that come up most often for foreign companies employing
+            people in Morocco.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          {
+            GUIDES.map((g) => (
+              <article class="card guide">
+                <h3>{g.title}</h3>
+                <p>{g.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STATUTORY AUDIT ================= -->
+    <section class="section section--alt" id="statutory-audit">
+      <div class="container">
+        <div class="panel-dark">
+          <div class="panel-dark__body">
+            <p class="eyebrow">05 — Statutory audit</p>
+            <h2>Statutory audit of your Moroccan subsidiary</h2>
+            <p>
+              Audit opinion on the annual accounts, general and special reports,
+              review of related-party agreements and the checks required by law.
+              An independent engagement that secures your shareholder meetings
+              and reassures your partners and group auditors.
+            </p>
+            <ul>
+              <li>
+Companies required to have a statutory auditor (SAs, or above the thresholds)
+              </li>
+              <li>
+Subsidiaries of UK and US groups that report into consolidated accounts
+              </li>
+              <li>
+Boards of directors and shareholders
+              </li>
+            </ul>
+            <div class="hero__cta">
+              <a class="btn btn--light" href="#contact">Appoint a statutory auditor</a>
+              <a class="btn btn--outline-light" href="#contact">Get our accounts audited</a>
+            </div>
+          </div>
+          <figure class="panel-dark__figure">
+            <img
+              src="/images/audit-legal-commissariat.webp"
+              alt="Statutory auditors reviewing a company’s annual financial statements during an audit"
+              width="1200"
+              height="896"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= A WORD FROM THE MANAGING PARTNER ================= -->
+    <section class="section section--alt" id="managing-partner">
+      <div class="container">
+        <div class="founder">
+          <figure class="founder__figure">
+            <img
+              src="/images/dirigeant-caf.svg"
+              alt="Portrait of CAF’s managing partner, with the firm’s logo"
+              width="640"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="founder__body">
+            <p class="eyebrow">A word from our managing partner</p>
+            <blockquote class="founder__quote">
+              “Payroll and social security filings leave no room for
+              approximation. Our job is to take them off your hands completely,
+              with the same rigour a CNSS inspection or a statutory audit
+              would demand.”
+            </blockquote>
+            <p class="founder__name">
+              <strong>Managing partner’s name</strong>
+              <span>Founder &amp; managing partner — CAF</span>
+            </p>
+            <p class="founder__note">
+              A chartered accountant and statutory auditor, our managing partner
+              leads the firm’s payroll and audit work from Casablanca.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">FAQ</p>
+          <h2>What foreign employers ask us most</h2>
+        </div>
+        <div class="faq">
+          {
+            FAQ.map((f, i) => (
+              <details open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq__body">{f.a}</div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section section--alt" id="contact">
+      <div class="container cta-band">
+        <p class="eyebrow">Contact</p>
+        <h2>Let’s talk about your Moroccan payroll</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">
+          Tell us your headcount and timeline. We reply within one business day
+          with a clear proposal, and can schedule a call during UK or US
+          East Coast hours.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${SITE.email}`}>Email us</a>
+          <a class="btn btn--ghost" href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

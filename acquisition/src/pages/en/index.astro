@@ -1,0 +1,335 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE } from "../../consts";
+import { SITE_EN, STATS_EN as STATS, SERVICES_EN as SERVICES, GUIDES_EN as GUIDES, FAQ_EN as FAQ } from "../../consts.en";
+
+const pageTitle = `${SITE_EN.tagline} · ${SITE.name}`;
+const addr = SITE.address;
+const pageUrl = `${SITE.url}/en/`;
+const orgId = `${SITE.url}/#organization`;
+
+/* ---------- Structured data (JSON-LD) ---------- */
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": orgId,
+  name: SITE_EN.legalName,
+  alternateName: SITE.name,
+  url: pageUrl,
+  logo: `${SITE.url}/Logo_128x128.png`,
+  image: `${SITE.url}/Logo_128x128.png`,
+  description: SITE_EN.description,
+  email: SITE.email,
+  telephone: SITE.phoneE164,
+  priceRange: "$$$",
+  knowsLanguage: ["en", "fr", "ar"],
+  areaServed: { "@type": "Country", name: "Morocco" },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: addr.street,
+    addressLocality: addr.locality,
+    addressRegion: addr.region,
+    postalCode: addr.postalCode,
+    addressCountry: addr.country,
+  },
+  parentOrganization: {
+    "@type": "Organization",
+    name: "CAF — Expertise sociale & Audit",
+    url: "https://www.cabinet-caf.ma",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Corporate finance services",
+    itemListElement: [
+      ...SERVICES.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, url: `${pageUrl}#services` },
+      })),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Business financing & cash management",
+          url: `${pageUrl}#financing`,
+        },
+      },
+    ],
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${pageUrl}#website`,
+  url: pageUrl,
+  name: `${SITE.name} — Corporate Finance`,
+  inLanguage: "en",
+  publisher: { "@id": orgId },
+};
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const jsonLd = [organization, website, faqPage];
+
+const serviceIcons: Record<number, string> = {
+  15: `<circle cx="10" cy="10" r="6"/><path d="m20 20-5.2-5.2"/>`,
+  21: `<path d="M12 3 3 7.5V16l9 4.5 9-4.5V7.5L12 3z"/><path d="M3 7.5 12 12l9-4.5"/><path d="M12 12v9"/>`,
+};
+
+const steps = [
+  {
+    t: "Scoping & valuation",
+    d: "Understanding the business, restating the accounts and cross-checking DCF, multiples and adjusted net assets to set a defensible value range.",
+  },
+  {
+    t: "Due diligence & data room",
+    d: "A structured data room, financial, tax, employment and legal review, Q&A with the other side, and a risk summary in English.",
+  },
+  {
+    t: "Negotiation & closing",
+    d: "Price adjustments, drafting the seller’s warranties, satisfying conditions precedent, then transfer of the shares.",
+  },
+];
+---
+
+<Layout
+  title={pageTitle}
+  description={SITE_EN.description}
+  path="/en/"
+  lang="en"
+  alternates={{ fr: "/", en: "/en/" }}
+  jsonLd={jsonLd}
+>
+  <Header lang="en" switchTo="/" />
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__body">
+          <p class="eyebrow">Corporate finance — Morocco</p>
+          <h1>Buy, value or sell a business in Morocco with confidence</h1>
+          <p class="lead">
+            CAF’s corporate finance team in Casablanca supports UK and US
+            buyers, investors and funds: multi-method valuation, acquisition
+            due diligence, asset verification and financing, with reports in
+            English.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Book a call</a>
+            <a class="btn btn--ghost" href="#services">See our services</a>
+          </div>
+          <ul class="hero__trust">
+            <li>Valuation by <strong>DCF · multiples · adjusted net assets</strong></li>
+            <li>Managed <strong>data room</strong> &amp; Q&amp;A</li>
+            <li><strong>Independent</strong> advice, buy-side or sell-side</li>
+          </ul>
+        </div>
+
+        <div class="hero__media">
+          <div class="hero__viz">
+            <svg viewBox="0 0 440 380" role="img" aria-label="From book value to enterprise value: five rising bars and a trend line">
+              <line x1="34" y1="322" x2="412" y2="322" stroke="#e3ebe9" stroke-width="2" />
+              <rect x="44" y="262" width="48" height="60" rx="4" fill="#a9dcf4" />
+              <rect x="120" y="202" width="48" height="120" rx="4" fill="#3bb0e5" />
+              <rect x="196" y="147" width="48" height="175" rx="4" fill="#1a9dd9" />
+              <rect x="272" y="97" width="48" height="225" rx="4" fill="#12b886" />
+              <rect x="348" y="52" width="48" height="270" rx="4" fill="#0e9d6e" />
+              <polyline
+                points="68,258 144,198 220,143 296,93 372,48"
+                fill="none"
+                stroke="#0f2230"
+                stroke-width="2"
+                stroke-dasharray="5 5"
+                stroke-linecap="round"
+              />
+              <g fill="#0f2230">
+                <circle cx="68" cy="258" r="4" />
+                <circle cx="144" cy="198" r="4" />
+                <circle cx="220" cy="143" r="4" />
+                <circle cx="296" cy="93" r="4" />
+                <circle cx="372" cy="48" r="4" />
+              </g>
+              <text x="34" y="352" font-family="system-ui, sans-serif" font-size="13" fill="#5c6b7a">Book value</text>
+              <text x="412" y="352" text-anchor="end" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#08543c">Enterprise value</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= KEY FIGURES ================= -->
+    <section class="section stats" aria-label="The team in figures">
+      <div class="container stats__grid">
+        {
+          STATS.map((s) => (
+            <div class="stats__item">
+              <span class="stats__value">{s.value}</span>
+              <span class="stats__label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Our services</p>
+          <h2>Two engagements at the heart of every deal</h2>
+          <p class="lead">
+            From valuation to asset verification, each engagement is led by
+            specialists in valuing and reviewing Moroccan companies, who
+            know where local accounts differ from what you are used to.
+          </p>
+        </div>
+        <div class="grid grid--2">
+          {
+            SERVICES.map((s) => (
+              <article class="card">
+                <span class="card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[s.id]} />
+                </span>
+                <h3>
+                  <a class="stretched" href="#contact">{s.title}</a>
+                </h3>
+                <p>{s.desc}</p>
+                <span class="card__link">Discuss your deal &rarr;</span>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= APPROACH ================= -->
+    <section class="section" id="approach">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Our approach</p>
+          <h2>A deal in three stages</h2>
+        </div>
+        <div class="grid grid--3 steps">
+          {
+            steps.map((s) => (
+              <article class="card step">
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESOURCES ================= -->
+    <section class="section section--alt" id="resources">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Resources</p>
+          <h2>Valuation and M&amp;A in Morocco: key points</h2>
+          <p class="lead">
+            Practical guidance for preparing a sale, an acquisition or a
+            fundraising in Morocco.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          {
+            GUIDES.map((g) => (
+              <article class="card guide">
+                <h3>{g.title}</h3>
+                <p>{g.desc}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINANCING & CASH ================= -->
+    <section class="section" id="financing">
+      <div class="container">
+        <div class="panel-dark">
+          <div class="panel-dark__body">
+            <p class="eyebrow">07 — Financing</p>
+            <h2>Financing &amp; cash management for your Moroccan entity</h2>
+            <p>
+              For CEOs and CFOs facing cash pressure or looking for funds to
+              invest locally. We size the need, build the cash flow forecast and
+              use the right local levers: leasing, factoring, receivables
+              financing, short-term credit lines and debt restructuring.
+            </p>
+            <ul>
+              <li>Finance teams that need to secure local cash flow</li>
+              <li>Growing subsidiaries to fund (working capital, capex)</li>
+              <li>Companies preparing a fundraising, a buyout or a sale</li>
+            </ul>
+            <div class="hero__cta">
+              <a class="btn btn--light" href="#contact">Find financing</a>
+              <a class="btn btn--outline-light" href="#contact">Improve my cash position</a>
+            </div>
+          </div>
+          <aside class="panel-dark__aside">
+            <h3>Levers we use</h3>
+            <p>
+              Equipment and property leasing · factoring and receivables
+              assignment · bill discounting · credit lines and overdrafts ·
+              debt rescheduling and consolidation · rolling 13-week cash flow
+              forecast.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--alt" id="faq">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">FAQ</p>
+          <h2>What buyers and sellers ask us</h2>
+        </div>
+        <div class="faq">
+          {
+            FAQ.map((f, i) => (
+              <details open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq__body">{f.a}</div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section" id="contact">
+      <div class="container cta-band">
+        <p class="eyebrow">Contact</p>
+        <h2>Let’s talk about your deal</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">
+          Acquisition, sale, valuation, asset count or financing: tell us
+          about your project. We reply within one business day and can meet
+          by video during UK or US hours.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${SITE.email}`}>Email the team</a>
+          <a class="btn btn--ghost" href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang="en" />
+</Layout>

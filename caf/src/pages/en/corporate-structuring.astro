@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import NumberedList from '../../components/NumberedList.astro';
+import DefList from '../../components/DefList.astro';
+import Steps from '../../components/Steps.astro';
+import Faq from '../../components/Faq.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import Contact from '../../components/Contact.astro';
+
+const title = 'Legal strategy & group structuring in Morocco';
+const description =
+  'Entity choice, holding companies, shareholders’ agreements, restructuring and intra-group flows for UK and US groups with operations in Morocco.';
+
+const interventions = [
+  {
+    title: 'Choice of entity',
+    body: 'SARL, SA, limited partnership or branch: we weigh your activity, shareholders, tax position and likely exit route.',
+  },
+  {
+    title: 'Holding companies',
+    body: 'Where the Moroccan entity should sit in your group, how dividends flow up, acquisition leverage, and whether a regional holding makes sense.',
+  },
+  {
+    title: 'Shareholders’ agreement',
+    body: 'Governance, pre-emption, tag-along and drag-along rights, lock-ups, non-compete and deadlock mechanisms, including with a Moroccan joint-venture partner.',
+  },
+  {
+    title: 'Restructuring',
+    body: 'Mergers, partial asset transfers, demergers, conversions and transfers of registered office: legal, tax and employment aspects.',
+  },
+  {
+    title: 'Governance & delegations',
+    body: 'Allocation of powers, signing authorities, related-party agreements and a clear map of directors’ responsibilities.',
+  },
+  {
+    title: 'Intra-group flows',
+    body: 'Management fees, brand royalties, intra-group loans and recharges, in line with transfer pricing rules and the UK and US tax treaties.',
+  },
+];
+
+const when = [
+  {
+    title: 'At formation',
+    body: 'To put in place a structure you will not have to unwind in two years: entity, capital, governance, holding company.',
+  },
+  {
+    title: 'Before raising funds',
+    body: 'To show investors a clean cap table, investor-ready articles and a shareholders’ agreement ready to negotiate.',
+  },
+  {
+    title: 'Before an acquisition',
+    body: 'To choose the acquisition vehicle, place the debt at the right level and plan the integration.',
+  },
+  {
+    title: 'When partners disagree',
+    body: 'To get an objective view of the deadlock and enforce or renegotiate the agreement.',
+  },
+  {
+    title: 'Ahead of a sale or exit',
+    body: 'To organise ownership, governance and the tax treatment of the disposal.',
+  },
+];
+
+const process = [
+  { when: 'Week 1', title: 'Diagnosis', body: 'Review of the articles, shareholding, flows and the owners’ objectives.' },
+  { when: 'Weeks 2 – 3', title: 'Costed recommendation', body: 'Target structure, legal, tax and employment impact, timeline and budget.' },
+  { when: 'Weeks 3 – 8', title: 'Implementation', body: 'Drafting of deeds, shareholder meetings, filings and legal notices, with a notary where required.' },
+  { when: 'Then', title: 'Follow-up', body: 'Company secretarial work and updates to the structure as your group evolves.' },
+];
+
+const faqs = [
+  {
+    q: 'Should a UK or US parent own the Moroccan company directly?',
+    a: 'Often yes, but not always. Direct ownership is simplest; an intermediate holding can make sense with several shareholders, several countries or a planned exit. The choice depends on treaty access, your home-country tax rules and the exit scenario, and we review it with your existing advisers.',
+  },
+  {
+    q: 'Is a shareholders’ agreement really useful for a subsidiary?',
+    a: 'For a wholly owned subsidiary, less so. As soon as there is a local partner, an investor or management shareholders, yes: it governs key decisions, entries and exits and deadlocks. Unlike the articles, it stays confidential.',
+  },
+  {
+    q: 'Can you work on a structure that is already in place?',
+    a: 'Yes. We start from what exists, identify the weak points (articles, governance, intra-group flows, tax) and propose a step-by-step upgrade plan.',
+  },
+  {
+    q: 'Do you work with our lawyers in London or New York?',
+    a: 'Yes. We handle the Moroccan side and coordinate with your home-country counsel and, where needed, Moroccan notaries. You keep a single point of contact at CAF Management.',
+  },
+  {
+    q: 'How do the UK–Morocco and US–Morocco tax treaties come in?',
+    a: 'Whenever profits, interest or royalties flow between Morocco and your home country, the relevant treaty sets the withholding tax rates and how double taxation is relieved. We build it into the target structure.',
+  },
+];
+---
+
+<BaseLayout
+  path="/en/corporate-structuring"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Legal strategy"
+      title="Structure your Moroccan operations the right way from day one"
+      lede="The right vehicle, governance and intra-group flows from the start, so you don’t have to rebuild everything at your first funding round, first acquisition or first disagreement between partners."
+    />
+
+    <Section index="01" eyebrow="What we cover" title="Six structuring levers">
+      <NumberedList items={interventions} />
+    </Section>
+
+    <Section index="02" eyebrow="When to call us" title="The moments when structure matters" variant="tint">
+      <DefList items={when} />
+    </Section>
+
+    <Section index="03" eyebrow="Process" title="How an engagement runs" variant="dark">
+      <Steps items={process} />
+    </Section>
+
+    <Faq faqs={faqs} title="Legal strategy: common questions" />
+    <RelatedServices current="/en/corporate-structuring" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -6,6 +6,7 @@ import '@fontsource/poppins/700.css';
 import '../styles/global.css';
 import { SITE } from '../consts';
 import Schema from '../components/Schema.astro';
+import { langFromUrl, alternatesFor, ui } from '../i18n';
 
 interface QA {
   q: string;
@@ -20,9 +21,12 @@ interface Props {
   breadcrumb?: { name: string; item?: string }[];
 }
 
+const lang = langFromUrl(Astro.url);
+const t = ui(lang);
+
 const {
   title,
-  description = SITE.description,
+  description = t.description,
   path = '/',
   pageType = 'hub',
   faqs,
@@ -30,13 +34,18 @@ const {
 } = Astro.props;
 const site = Astro.site ?? new URL(SITE.url);
 
-const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.tagline} | ${SITE.name}`;
+const pageTitle = title ? `${title} | ${SITE.name}` : `${t.tagline} | ${SITE.name}`;
 const canonical = new URL(path, site).href;
+const alt = alternatesFor(path);
+const hreflangs: [string, string][] = [];
+if (alt.fr) hreflangs.push(['fr', new URL(alt.fr, site).href]);
+if (alt.en) hreflangs.push(['en', new URL(alt.en, site).href]);
+const xDefault = new URL(alt.fr ?? alt.en ?? path, site).href;
 const ogImage = new URL(SITE.ogImage, site).href;
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,12 +59,12 @@ const ogImage = new URL(SITE.ogImage, site).href;
     />
     <meta name="author" content={SITE.name} />
 
-    <link rel="alternate" hreflang="fr" href={canonical} />
-    <link rel="alternate" hreflang="x-default" href={canonical} />
+    {hreflangs.map(([l, href]) => <link rel="alternate" hreflang={l} href={href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -63,7 +72,7 @@ const ogImage = new URL(SITE.ogImage, site).href;
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${SITE.name} — ${SITE.tagline}`} />
+    <meta property="og:image:alt" content={`${SITE.name} — ${t.tagline}`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
@@ -89,7 +98,7 @@ const ogImage = new URL(SITE.ogImage, site).href;
     />
   </head>
   <body>
-    <a class="skip" href="#main">Aller au contenu</a>
+    <a class="skip" href="#main">{t.skip}</a>
     <slot />
 
     <script>

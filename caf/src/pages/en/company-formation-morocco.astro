@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import DefList from '../../components/DefList.astro';
+import NumberedList from '../../components/NumberedList.astro';
+import Steps from '../../components/Steps.astro';
+import LegalForms from '../../components/LegalForms.astro';
+import Faq from '../../components/Faq.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import Contact from '../../components/Contact.astro';
+import { valuePropsEn, offresEn, stepsEn, heroFactsEn, creationFaqsEn } from '../../data/en';
+
+const title = 'Company formation in Morocco';
+const description =
+  'Set up a subsidiary, branch or liaison office in Morocco from the UK or US: entity choice, registration, registered office, accounting and payroll. CAF Management, Casablanca, since 1995.';
+---
+
+<BaseLayout
+  path="/en/company-formation-morocco"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={creationFaqsEn}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Company formation · Casablanca · since 1995"
+      title="Set up your company in Morocco, without the guesswork"
+      lede="From the legal study to your first year-end close, CAF Management runs your whole Moroccan set-up: registration, registered office, tax, payroll and HR. You deal with one English-speaking point of contact in Casablanca."
+      secondary={{ label: 'See how it works', href: '#process' }}
+      facts={heroFactsEn}
+    />
+
+    <Section
+      id="why-morocco"
+      index="01"
+      eyebrow="Why Morocco"
+      title="A close, predictable market for UK and US businesses"
+      intro="Nearshoring, regional headquarters, manufacturing for export: four arguments come up in almost every project."
+    >
+      <DefList items={valuePropsEn} />
+      <p class="disclaimer">
+        General information, accurate at the time of writing. It is not personalised legal or tax
+        advice: every situation is confirmed during the scoping call.
+      </p>
+    </Section>
+
+    <Section
+      id="support"
+      index="02"
+      eyebrow="What we handle"
+      title="One firm, from incorporation to day-to-day management"
+      intro="Our four departments (Accounting, Advisory, Audit and Payroll/HR) work together, from the first filing to your monthly reporting."
+      variant="tint"
+    >
+      <NumberedList items={offresEn} />
+    </Section>
+
+    <Section
+      id="process"
+      index="03"
+      eyebrow="Process"
+      title="Your Moroccan entity in 5 steps"
+      intro="You get a timeline at the scoping stage and an update at every milestone. Timings are indicative and depend on the entity type and sector."
+      variant="dark"
+    >
+      <Steps items={stepsEn} />
+    </Section>
+
+    <LegalForms />
+
+    <Faq faqs={creationFaqsEn} title="Setting up in Morocco: what business leaders ask us" />
+
+    <RelatedServices current="/en/company-formation-morocco" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,4 +1,6 @@
 ---
+import { langFromUrl, ui } from '../i18n';
+
 interface QA {
   q: string;
   a: string;
@@ -8,7 +10,8 @@ interface Props {
   eyebrow?: string;
   title?: string;
 }
-const { faqs, eyebrow = 'Questions fréquentes', title = 'Ce que les dirigeants nous demandent' } =
+const t = ui(langFromUrl(Astro.url));
+const { faqs, eyebrow = t.faqEyebrow, title = t.faqTitle } =
   Astro.props;
 ---
 

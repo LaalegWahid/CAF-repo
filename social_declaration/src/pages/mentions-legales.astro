@@ -10,9 +10,10 @@ const addr = SITE.address;
   title="Mentions légales"
   description={`Mentions légales du site ${SITE.legalName}.`}
   path="/mentions-legales"
+  alternates={{ fr: "/mentions-legales", en: "/en/legal-notice" }}
   noindex={true}
 >
-  <Header />
+  <Header switchTo="/en/legal-notice" />
   <main id="main" class="section">
     <div class="container" style="max-width:760px">
       <h1>Mentions légales</h1>

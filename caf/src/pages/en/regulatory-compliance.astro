@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import NumberedList from '../../components/NumberedList.astro';
+import DefList from '../../components/DefList.astro';
+import Faq from '../../components/Faq.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import Contact from '../../components/Contact.astro';
+
+const title = 'Regulatory monitoring & compliance in Morocco';
+const description =
+  'Ongoing regulatory watch, a map of your obligations and hands-on compliance for your Moroccan entity: corporate law, employment, tax, foreign exchange and data protection.';
+
+const service = [
+  {
+    title: 'Regulatory watch',
+    body: 'We track changes in corporate, employment, tax and foreign exchange law, and in the sector rules that apply to your business.',
+  },
+  {
+    title: 'Tailored alerts in English',
+    body: 'When a new rule affects you, you get a short note: what changes, the practical impact, what to do and by when.',
+  },
+  {
+    title: 'Obligations map',
+    body: 'An inventory of your filing, documentation and posting obligations, brought together in a single compliance calendar.',
+  },
+  {
+    title: 'Getting compliant',
+    body: 'Personal data protection (Law 09-08 / CNDP), staff register, mandatory notices, agreements, licences and operating permits.',
+  },
+  {
+    title: 'Support during inspections',
+    body: 'Preparing supporting files and handling exchanges with the labour inspectorate, CNSS, tax administration and the Foreign Exchange Office.',
+  },
+];
+
+const areas = [
+  { title: 'Corporate law', body: 'Meeting, filing and publication obligations; statutory audit thresholds.' },
+  { title: 'Employment & social security', body: 'Contracts, working time, internal rules, CNSS, AMO health insurance, occupational health.' },
+  { title: 'Tax & VAT', body: 'Filing calendar, documentation requirements, e-invoicing.' },
+  { title: 'Foreign exchange', body: 'Transactions with your parent company, investments, foreign currency accounts, repatriation of profits.' },
+  { title: 'Data protection', body: 'CNDP notifications and authorisations, privacy notices, retention periods, transfers to the UK or US.' },
+  { title: 'Sector regulation', body: 'Licences, specifications and standards specific to your industry.' },
+];
+
+const faqs = [
+  {
+    q: 'How is this different from a legal information subscription?',
+    a: 'A database gives you raw texts, usually in French or Arabic. We filter what actually applies to you, explain the operational impact in English and tell you what to do and by when. It is a service, not a news feed.',
+  },
+  {
+    q: 'Does GDPR or UK GDPR apply in Morocco?',
+    a: 'The Moroccan framework is Law 09-08 on personal data protection, supervised by the CNDP, which is close in spirit to GDPR. Transferring personal data from Morocco to the UK or US can require CNDP authorisation. If you also process data on people in the UK or EU, UK GDPR or GDPR can apply in parallel.',
+  },
+  {
+    q: 'Can our profits be repatriated to the UK or US?',
+    a: 'Yes. Foreign investment made in foreign currency and properly declared benefits from a guarantee of transfer for dividends and sale proceeds under Moroccan foreign exchange rules. We make sure the paperwork is in order from the start.',
+  },
+  {
+    q: 'Will I get an alert for every new text?',
+    a: 'No, only for those that affect your business, sector or organisation. The goal is to save you time, not add noise.',
+  },
+  {
+    q: 'Can you audit our current compliance?',
+    a: 'Yes. We take stock (obligations covered, gaps, risks) and turn it into a prioritised compliance plan.',
+  },
+];
+---
+
+<BaseLayout
+  path="/en/regulatory-compliance"
+  title={title}
+  description={description}
+  pageType="service"
+  faqs={faqs}
+>
+  <Header />
+  <main id="main">
+    <PageHero
+      eyebrow="Monitoring & compliance"
+      title="Stay compliant in Morocco without reading the Official Gazette"
+      lede="Regulatory monitoring targeted at your business, alerts in English that say what to do and by when, and hands-on help to bring your obligations up to date. Morocco’s rules change quickly."
+    />
+
+    <Section index="01" eyebrow="Our service" title="How we keep you covered">
+      <NumberedList items={service} />
+    </Section>
+
+    <Section index="02" eyebrow="Areas covered" title="What we watch for you" variant="tint">
+      <DefList items={areas} />
+    </Section>
+
+    <Faq faqs={faqs} title="Monitoring & compliance: common questions" />
+    <RelatedServices current="/en/regulatory-compliance" />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

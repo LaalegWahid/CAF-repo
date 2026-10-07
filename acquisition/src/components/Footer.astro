@@ -1,0 +1,104 @@
+---
+import { SITE, SERVICES, GUIDES } from "../consts";
+import { SITE_EN, SERVICES_EN, GUIDES_EN } from "../consts.en";
+
+interface Props {
+  lang?: "fr" | "en";
+}
+const { lang = "fr" } = Astro.props;
+const en = lang === "en";
+const year = new Date().getFullYear();
+const addr = SITE.address;
+const legalName = en ? SITE_EN.legalName : SITE.legalName;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/Logo_128x128.png" alt={`Logo ${SITE.name}`} width="38" height="38" />
+        <p><strong style="color:#fff">{legalName}</strong></p>
+        <p>{en ? SITE_EN.description : SITE.description}</p>
+        <p>
+          <a href={`tel:${SITE.phoneE164}`}>{SITE.phoneDisplay}</a><br />
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </p>
+        <address style="font-style:normal">
+          {addr.street}<br />
+          {addr.postalCode} {addr.locality}, {en ? "Morocco" : addr.countryName}
+        </address>
+      </div>
+
+      {
+        en ? (
+          <>
+            <nav aria-label="Services">
+              <h4>Services</h4>
+              <ul>
+                {SERVICES_EN.map((s) => (
+                  <li><a href="/en/#services">{s.title}</a></li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Resources">
+              <h4>Resources</h4>
+              <ul>
+                {GUIDES_EN.map((g) => (
+                  <li><a href="/en/#resources">{g.title}</a></li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Corporate finance">
+              <h4>Corporate finance</h4>
+              <ul>
+                <li><a href="/en/#financing">Financing &amp; cash management</a></li>
+                <li><a href="/en/#faq">FAQ</a></li>
+                <li><a href="/en/#contact">Contact us</a></li>
+                <li><a href="/en/legal-notice">Legal notice</a></li>
+                <li><a href="/" hreflang="fr" lang="fr">Version française</a></li>
+              </ul>
+            </nav>
+          </>
+        ) : (
+          <>
+            <nav aria-label="Services">
+              <h4>Services</h4>
+              <ul>
+                {SERVICES.map((s) => (
+                  <li><a href={s.href}>{s.title}</a></li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Ressources">
+              <h4>Ressources</h4>
+              <ul>
+                {GUIDES.map((g) => (
+                  <li><a href={g.href}>{g.title}</a></li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Pôle corporate finance">
+              <h4>Le pôle</h4>
+              <ul>
+                <li><a href="/#financement">Financement &amp; trésorerie</a></li>
+                <li><a href="/#faq">Questions fréquentes</a></li>
+                <li><a href="/#contact">Contact &amp; rendez-vous</a></li>
+                <li><a href="/mentions-legales">Mentions légales</a></li>
+                <li><a href="/en/" hreflang="en" lang="en">English version</a></li>
+              </ul>
+            </nav>
+          </>
+        )
+      }
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {year} {legalName}. {en ? "All rights reserved." : "Tous droits réservés."}</span>
+      <span>Casablanca &middot; {en ? "Morocco" : "Maroc"}</span>
+    </div>
+  </div>
+</footer>

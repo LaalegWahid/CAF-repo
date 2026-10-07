@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap: only pages that exist today are listed, so crawlers are
+  not sent to 404s. Add the <url> entries below as the service and resource
+  pages go live, or run `npx astro add sitemap` for automatic generation.
+
+  Pending pages:
+    /services/due-diligence-evaluation
+    /services/inventaire-codification-actifs
+    /ressources/methodes-valorisation-dcf-multiples-ancc
+    /ressources/checklist-due-diligence
+    /ressources/vendre-entreprise-maroc-etapes
+    /ressources/data-room
+    /ressources/garantie-actif-passif
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://corporate.cabinet-caf.ma/</loc>
+    <xhtml:link rel="alternate" hreflang="fr-ma" href="https://corporate.cabinet-caf.ma/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corporate.cabinet-caf.ma/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corporate.cabinet-caf.ma/" />
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://corporate.cabinet-caf.ma/mentions-legales</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://corporate.cabinet-caf.ma/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr-ma" href="https://corporate.cabinet-caf.ma/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://corporate.cabinet-caf.ma/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://corporate.cabinet-caf.ma/" />
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
