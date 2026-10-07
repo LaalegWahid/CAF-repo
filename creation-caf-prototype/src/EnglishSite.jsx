@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SERVICE_OPTIONS, submitLead } from "./leadForm.js";
 
 const routes = {
   "/en": {
@@ -359,6 +360,23 @@ function ProofBand() {
 
 function LeadPanel({ title = "Tell us about your project", source = "English enquiry" }) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSending(true);
+    setError(false);
+    try {
+      await submitLead(event.currentTarget);
+      setSubmitted(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
+  };
+
   if (submitted) {
     return (
       <div className="en-lead-card en-success" role="status">
@@ -370,7 +388,7 @@ function LeadPanel({ title = "Tell us about your project", source = "English enq
     );
   }
   return (
-    <form className="en-lead-card" onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}>
+    <form className="en-lead-card" onSubmit={handleSubmit}>
       <input type="hidden" name="source" value={source} />
       <div className="en-form-heading"><span>First conversation</span><h3>{title}</h3></div>
       <label>Full name<input name="name" required autoComplete="name" /></label>
@@ -379,17 +397,18 @@ function LeadPanel({ title = "Tell us about your project", source = "English enq
         <label>Phone<input type="tel" name="phone" autoComplete="tel" /></label>
       </div>
       <label>What do you need?
-        <select name="need" defaultValue="" required>
+        <select name="service" defaultValue="" required>
           <option value="" disabled>Select a service</option>
-          <option>Company formation</option>
-          <option>Accounting and tax</option>
-          <option>Market entry</option>
-          <option>Legal, payroll or HR</option>
-          <option>Audit or strategic advisory</option>
+          {SERVICE_OPTIONS.map(({ value, en }) => <option key={value} value={value}>{en}</option>)}
         </select>
       </label>
+      <div className="en-field-row">
+        <label>Country of operation<input name="country" required autoComplete="country-name" /></label>
+        <label>Business sector<input name="sector" required /></label>
+      </div>
       <label>Tell us about the project<textarea name="message" rows="4" required /></label>
-      <button className="en-primary" type="submit">Request a conversation</button>
+      <button className="en-primary" type="submit" disabled={sending}>{sending ? "Sending…" : "Request a conversation"}</button>
+      {error && <p className="en-form-error" role="alert">Your enquiry could not be sent. Please try again or email info@caf.ma.</p>}
       <small>By sending this form, you agree to be contacted by CAF Management about your enquiry.</small>
     </form>
   );

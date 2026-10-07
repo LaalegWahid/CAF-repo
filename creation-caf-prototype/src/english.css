@@ -311,6 +311,8 @@
 .en-lead-card input, .en-lead-card select, .en-lead-card textarea { background: #fbfcfd; }
 .en-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .en-lead-card small { color: #738393; line-height: 1.5; }
+.en-lead-card .en-primary:disabled { opacity: .6; cursor: wait; }
+.en-form-error { margin: 0; color: #b42318; font-size: .9rem; line-height: 1.5; }
 .en-success { min-height: 560px; justify-content: center; align-items: flex-start; }
 .en-success p { color: var(--en-muted); line-height: 1.7; }
 .en-success button { min-height: 48px; border: 0; padding: 0 20px; color: white; background: var(--en-ink); font-weight: 900; }

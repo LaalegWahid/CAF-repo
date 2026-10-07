@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EnglishSite } from "./EnglishSite.jsx";
+import { SERVICE_OPTIONS, submitLead } from "./leadForm.js";
 
 const steps = [
   ["01", "Votre projet", "Nous cadrons votre activité, vos associés et votre calendrier."],
@@ -39,9 +40,21 @@ function FrenchLanding() {
     scrollToId(id);
   };
 
-  const submitLead = (event) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(false);
+    try {
+      await submitLead(event.currentTarget);
+      setSubmitted(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -235,7 +248,8 @@ function FrenchLanding() {
                 <button className="button button-navy" onClick={() => setSubmitted(false)}>Envoyer une autre demande</button>
               </div>
             ) : (
-              <form onSubmit={submitLead}>
+              <form onSubmit={handleSubmit}>
+                <input type="hidden" name="source" value="Site FR — création au Maroc" />
                 <div className="form-heading">
                   <span>Premier échange</span>
                   <h3>Présentez votre projet</h3>
@@ -245,17 +259,19 @@ function FrenchLanding() {
                   <label>Email professionnel<input type="email" name="email" required autoComplete="email" /></label>
                   <label>Téléphone<input type="tel" name="phone" autoComplete="tel" /></label>
                 </div>
-                <label>Où en êtes-vous ?
-                  <select name="stage" defaultValue="" required>
-                    <option value="" disabled>Sélectionnez une situation</option>
-                    <option>J’explore une idée</option>
-                    <option>Je prépare la création</option>
-                    <option>Mon entreprise existe déjà</option>
-                    <option>Je représente une entreprise française</option>
+                <label>Service souhaité
+                  <select name="service" defaultValue="" required>
+                    <option value="" disabled>Sélectionnez un service</option>
+                    {SERVICE_OPTIONS.map(({ value }) => <option key={value} value={value}>{value}</option>)}
                   </select>
                 </label>
+                <div className="field-row">
+                  <label>Pays d’activité<input name="country" required autoComplete="country-name" /></label>
+                  <label>Secteur d’activité<input name="sector" required /></label>
+                </div>
                 <label>Votre projet au Maroc<textarea name="message" rows="4" required /></label>
-                <button className="button button-cyan form-submit" type="submit">Être recontacté</button>
+                <button className="button button-cyan form-submit" type="submit" disabled={sending}>{sending ? "Envoi en cours…" : "Être recontacté"}</button>
+                {error && <p className="form-error" role="alert">L’envoi a échoué. Réessayez ou écrivez-nous à info@caf.ma.</p>}
                 <small>En envoyant ce formulaire, vous acceptez d’être recontacté par CAF Management.</small>
               </form>
             )}
