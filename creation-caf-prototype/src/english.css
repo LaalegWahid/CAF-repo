@@ -305,17 +305,10 @@
 .en-enquiry h2 { color: white; }
 .en-enquiry-grid > div:first-child > p:not(.en-eyebrow) { margin-top: 28px; color: #cbd9e4; font-size: 17px; line-height: 1.75; }
 .en-lead-card { padding: 42px; display: flex; flex-direction: column; gap: 17px; color: var(--en-ink); background: white; }
-.en-form-heading span, .en-success > span { color: var(--en-blue); font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
-.en-form-heading h3, .en-success h3 { margin: 8px 0 12px; color: var(--en-ink); font-size: 32px; }
-.en-lead-card label { color: var(--en-ink); }
-.en-lead-card input, .en-lead-card select, .en-lead-card textarea { background: #fbfcfd; }
-.en-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.en-form-heading span { color: var(--en-blue); font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+.en-form-heading h3 { margin: 8px 0 12px; color: var(--en-ink); font-size: 32px; }
+.en-lead-card p { color: var(--en-muted); line-height: 1.7; }
 .en-lead-card small { color: #738393; line-height: 1.5; }
-.en-lead-card .en-primary:disabled { opacity: .6; cursor: wait; }
-.en-form-error { margin: 0; color: #b42318; font-size: .9rem; line-height: 1.5; }
-.en-success { min-height: 560px; justify-content: center; align-items: flex-start; }
-.en-success p { color: var(--en-muted); line-height: 1.7; }
-.en-success button { min-height: 48px; border: 0; padding: 0 20px; color: white; background: var(--en-ink); font-weight: 900; }
 
 .en-story-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 100px; }
 .en-story-grid > div:last-child { padding-top: 28px; }
@@ -537,7 +530,6 @@
   .en-page-hero-image { height: 430px; border-left-width: 7px; }
   .en-process-list article { grid-template-columns: 48px 1fr; padding: 24px 18px; }
   .en-faq-grid { gap: 38px; }
-  .en-field-row { grid-template-columns: 1fr; }
   .en-lead-card { padding: 28px 22px; }
   .en-team-portrait { height: 500px; }
   .en-team-grid blockquote { font-size: 19px; }

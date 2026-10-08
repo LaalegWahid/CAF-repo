@@ -92,9 +92,6 @@ export const NAV = [
 /** Every primary CTA points at the contact section present on each page. */
 export const CTA_HREF = '#contact';
 
-/**
- * Contact form endpoint.
- * TODO: create an endpoint (Formspree, Web3Forms, Vercel Forms…) and paste the URL here.
- * Until then the form falls back to a mailto: link.
- */
-export const FORM_ENDPOINT = '';
+/** Enquiries are collected through this Google Form; the contact block links to it. */
+export const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSenoCyg27QlO9u9qnKxUJu3bFAAraVfOh_9oCaEkGdVYO-eVQ/viewform';

@@ -69,7 +69,7 @@ npm run preview
 ## À personnaliser avant mise en ligne
 
 1. **Domaine** — `SITE_URL` dans `astro.config.mjs`, `SITE.url` dans `src/consts.ts`, l'URL du sitemap dans `public/robots.txt`.
-2. **Formulaire** — `FORM_ENDPOINT` dans `src/consts.ts` (Formspree / Web3Forms / Vercel Forms). Sans ça, bascule en `mailto:`.
+2. **Formulaire** — le bloc contact renvoie vers le Google Form défini par `GOOGLE_FORM_URL` dans `src/consts.ts`.
 3. **Avis Google** — ajouter `aggregateRating` dans `src/components/Schema.astro` avec la note **et** le nombre d'avis réels (Google Business Profile). Laissé vide volontairement.
 4. **Relecture juridique** — faire valider par le département Conseil les chiffres et affirmations (capital SARL/SA, délais, régime des changes, CFC, loi 09-08) ; ils sont indicatifs et datés.
 

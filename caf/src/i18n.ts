@@ -134,16 +134,11 @@ const UI = {
       email: 'E-mail',
       office: 'Bureaux',
       hours: 'Horaires',
-      formNote:
-        'Formulaire en mode e-mail. Pour un envoi fluide, renseignez FORM_ENDPOINT dans src/consts.ts (Formspree, Web3Forms, Vercel Forms…).',
-      name: 'Nom et prénom',
-      workEmail: 'E-mail professionnel',
-      company: 'Société',
-      project: 'Votre projet',
-      placeholder: 'Activité, calendrier souhaité, effectif envisagé au Maroc…',
-      consent:
-        'J’accepte que ces informations soient utilisées pour être recontacté(e) au sujet de ma demande.',
-      submit: 'Demander un rendez-vous',
+      ctaTitle: 'Présentez votre projet en 2 minutes',
+      ctaText:
+        'Quelques questions sur votre activité, votre pays et le service recherché. Un membre de l’équipe CAF vous recontacte pour fixer l’entretien.',
+      ctaButton: 'Remplir le formulaire',
+      ctaNote: 'Le formulaire s’ouvre dans un nouvel onglet (Google Forms).',
     },
     legalForms: {
       eyebrow: 'Formes juridiques',
@@ -202,15 +197,11 @@ const UI = {
       email: 'Email',
       office: 'Office',
       hours: 'Office hours (Morocco time)',
-      formNote:
-        'This form currently opens your email client. Set FORM_ENDPOINT in src/consts.ts (Formspree, Web3Forms, Vercel Forms…) for direct submission.',
-      name: 'Full name',
-      workEmail: 'Work email',
-      company: 'Company',
-      project: 'Your project',
-      placeholder: 'Business activity, target timeline, planned headcount in Morocco…',
-      consent: 'I agree that this information may be used to contact me about my request.',
-      submit: 'Request a call',
+      ctaTitle: 'Tell us about your project in 2 minutes',
+      ctaText:
+        'A few questions about your business, your country and the service you need. A member of the CAF team will get back to you to book the call.',
+      ctaButton: 'Fill in the form',
+      ctaNote: 'The form opens in a new tab (Google Forms, in French).',
     },
     legalForms: {
       eyebrow: 'Entity types',

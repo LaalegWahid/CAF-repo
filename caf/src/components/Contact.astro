@@ -1,14 +1,11 @@
 ---
-import { ORG, FORM_ENDPOINT } from '../consts';
+import { ORG, GOOGLE_FORM_URL } from '../consts';
 import { langFromUrl, ui, HOURS_EN } from '../i18n';
 import Particles from './Particles.astro';
 
 const lang = langFromUrl(Astro.url);
 const t = ui(lang).contact;
 const hours = lang === 'en' ? HOURS_EN : ORG.hoursDisplay;
-const usingEndpoint = FORM_ENDPOINT.length > 0;
-const action = usingEndpoint ? FORM_ENDPOINT : `mailto:${ORG.email}`;
-const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plain';
 ---
 
 <section id="contact" class="section contact">
@@ -45,41 +42,12 @@ const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plai
       </ul>
     </div>
 
-    <form class="form" action={action} method="post" enctype={enctype} data-reveal style="--reveal-i:1">
-      {!usingEndpoint && (
-        <p class="form-note">
-          {t.formNote}
-        </p>
-      )}
-
-      <div class="field">
-        <label for="nom">{t.name}</label>
-        <input id="nom" name="nom" type="text" autocomplete="name" required />
-      </div>
-      <div class="two">
-        <div class="field">
-          <label for="email">{t.workEmail}</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field">
-          <label for="tel">{t.phone}</label>
-          <input id="tel" name="telephone" type="tel" autocomplete="tel" />
-        </div>
-      </div>
-      <div class="field">
-        <label for="societe">{t.company}</label>
-        <input id="societe" name="societe" type="text" autocomplete="organization" />
-      </div>
-      <div class="field">
-        <label for="message">{t.project}</label>
-        <textarea id="message" name="message" rows="4" placeholder={t.placeholder}></textarea>
-      </div>
-      <label class="consent">
-        <input type="checkbox" name="consentement" required />
-        <span>{t.consent}</span>
-      </label>
-      <button class="btn btn--primary" type="submit">{t.submit}</button>
-    </form>
+    <div class="form-cta" data-reveal style="--reveal-i:1">
+      <h3>{t.ctaTitle}</h3>
+      <p>{t.ctaText}</p>
+      <a class="btn btn--primary" href={GOOGLE_FORM_URL} target="_blank" rel="noopener">{t.ctaButton}</a>
+      <p class="form-note">{t.ctaNote}</p>
+    </div>
   </div>
 </section>
 
@@ -150,65 +118,26 @@ const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plai
     color: var(--body);
   }
 
-  .form {
+  .form-cta {
     border-top: 2px solid var(--teal-ink);
     padding-top: 1.75rem;
     display: grid;
     gap: 1.1rem;
   }
+  .form-cta h3 {
+    font-size: var(--step-2);
+  }
+  .form-cta p {
+    max-width: 46ch;
+  }
+  .form-cta .btn {
+    justify-self: start;
+    margin-top: 0.3rem;
+  }
   .form-note {
     font-size: 0.85rem;
     font-style: italic;
     color: var(--muted);
-  }
-  .two {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.1rem;
-  }
-  .field {
-    display: grid;
-    gap: 0.4rem;
-  }
-  .field label {
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--teal-ink);
-  }
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.8rem 0.9rem;
-    border: 1.5px solid var(--line);
-    border-radius: 9px;
-    background: #fff;
-    color: var(--ink);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.22);
-  }
-  textarea {
-    resize: vertical;
-  }
-  .consent {
-    display: flex;
-    gap: 0.6rem;
-    align-items: flex-start;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  .consent input {
-    width: auto;
-    margin-top: 0.15rem;
-    accent-color: var(--teal);
-  }
-  .form .btn {
-    justify-self: start;
-    margin-top: 0.3rem;
   }
 
   @media (max-width: 900px) {
@@ -217,9 +146,6 @@ const enctype = usingEndpoint ? 'application/x-www-form-urlencoded' : 'text/plai
     }
   }
   @media (max-width: 480px) {
-    .two {
-      grid-template-columns: 1fr;
-    }
     .coords li {
       grid-template-columns: 1fr;
       gap: 0.2rem;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SERVICE_OPTIONS, submitLead } from "./leadForm.js";
+import { GOOGLE_FORM_URL } from "./googleForm.js";
 
 const routes = {
   "/en": {
@@ -358,59 +358,14 @@ function ProofBand() {
   );
 }
 
-function LeadPanel({ title = "Tell us about your project", source = "English enquiry" }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSending(true);
-    setError(false);
-    try {
-      await submitLead(event.currentTarget);
-      setSubmitted(true);
-    } catch {
-      setError(true);
-    } finally {
-      setSending(false);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="en-lead-card en-success" role="status">
-        <span>Enquiry received</span>
-        <h3>Thank you.</h3>
-        <p>The CAF team will review your project and contact you to arrange the next conversation.</p>
-        <button onClick={() => setSubmitted(false)}>Send another enquiry</button>
-      </div>
-    );
-  }
+function LeadPanel({ title = "Tell us about your project" }) {
   return (
-    <form className="en-lead-card" onSubmit={handleSubmit}>
-      <input type="hidden" name="source" value={source} />
+    <div className="en-lead-card">
       <div className="en-form-heading"><span>First conversation</span><h3>{title}</h3></div>
-      <label>Full name<input name="name" required autoComplete="name" /></label>
-      <div className="en-field-row">
-        <label>Work email<input type="email" name="email" required autoComplete="email" /></label>
-        <label>Phone<input type="tel" name="phone" autoComplete="tel" /></label>
-      </div>
-      <label>What do you need?
-        <select name="service" defaultValue="" required>
-          <option value="" disabled>Select a service</option>
-          {SERVICE_OPTIONS.map(({ value, en }) => <option key={value} value={value}>{en}</option>)}
-        </select>
-      </label>
-      <div className="en-field-row">
-        <label>Country of operation<input name="country" required autoComplete="country-name" /></label>
-        <label>Business sector<input name="sector" required /></label>
-      </div>
-      <label>Tell us about the project<textarea name="message" rows="4" required /></label>
-      <button className="en-primary" type="submit" disabled={sending}>{sending ? "Sending…" : "Request a conversation"}</button>
-      {error && <p className="en-form-error" role="alert">Your enquiry could not be sent. Please try again or email info@caf.ma.</p>}
-      <small>By sending this form, you agree to be contacted by CAF Management about your enquiry.</small>
-    </form>
+      <p>A few questions about your business, your country and the service you need. A member of the CAF team will get back to you to arrange a first conversation.</p>
+      <a className="en-primary" href={GOOGLE_FORM_URL} target="_blank" rel="noopener">Fill in the form</a>
+      <small>The form opens in a new tab (Google Forms, in French).</small>
+    </div>
   );
 }
 
@@ -596,7 +551,7 @@ function FormationPage() {
       <section className="en-section" id="formation-process"><div className="shell"><div className="en-heading-row"><div><p className="en-eyebrow">From idea to operations</p><h2>A clear formation process.</h2></div><p>The exact requirements depend on your activity and structure. CAF turns them into a coordinated sequence for your project.</p></div><div className="en-process-list">{formationSteps.map(([number, title, text]) => <article key={number}><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div></div></section>
       <section className="en-detail-split"><div className="en-detail-image"><img src="/assets/generated/caf-cross-border-advisory.webp" alt="Advisers reviewing an international business project" loading="lazy" /></div><div className="en-detail-copy"><p className="en-eyebrow">What CAF coordinates</p><h2>More than registration.</h2><ul><li>Legal structure framing</li><li>Company registration support</li><li>Tax identification and compliance setup</li><li>Accounting and reporting preparation</li><li>Payroll, social and HR coordination</li><li>Ongoing legal, tax and strategic advice</li></ul></div></section>
       <section className="en-section en-faq-section"><div className="shell en-faq-grid"><div><p className="en-eyebrow">Common questions</p><h2>Before you begin.</h2></div><div>{formationFaqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></div></section>
-      <section className="en-enquiry" id="formation-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Start with the right questions</p><h2>Describe the company you want to create.</h2><p>Share the activity, founders, timing and what you already know. CAF will use that context to prepare the first conversation.</p></div><LeadPanel title="Discuss your company" source="Company formation page" /></div></section>
+      <section className="en-enquiry" id="formation-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Start with the right questions</p><h2>Describe the company you want to create.</h2><p>Share the activity, founders, timing and what you already know. CAF will use that context to prepare the first conversation.</p></div><LeadPanel title="Discuss your company" /></div></section>
     </>
   );
 }
@@ -610,7 +565,7 @@ function AccountingPage() {
       <ProofBand />
       <section className="en-section"><div className="shell"><div className="en-heading-row"><div><p className="en-eyebrow">One coordinated finance function</p><h2>Support that continues after setup.</h2></div><p>CAF combines day-to-day execution with senior advisory, helping international decision-makers understand the local position.</p></div><div className="en-service-list">{accountingServices.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
       <section className="en-quote-section"><div className="shell"><blockquote>“One firm. Complete expertise. Zero coordination on your end.”</blockquote><p>CAF Management’s one-stop-shop model brings specialists together around the same business.</p></div></section>
-      <section className="en-enquiry" id="accounting-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Accounting and tax enquiry</p><h2>Give your business a dependable local finance team.</h2><p>Tell us whether the company already operates in Morocco, what reporting you need and where the current pressure points are.</p></div><LeadPanel title="Discuss accounting and tax" source="Accounting and tax page" /></div></section>
+      <section className="en-enquiry" id="accounting-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Accounting and tax enquiry</p><h2>Give your business a dependable local finance team.</h2><p>Tell us whether the company already operates in Morocco, what reporting you need and where the current pressure points are.</p></div><LeadPanel title="Discuss accounting and tax" /></div></section>
     </>
   );
 }
@@ -623,7 +578,7 @@ function MarketEntryPage() {
       </PageIntro>
       <section className="en-section" id="market-support"><div className="shell"><div className="en-heading-row"><div><p className="en-eyebrow">From assessment to continuity</p><h2>A local partner across the entry journey.</h2></div><p>CAF connects strategic decisions with the legal, financial and operational work required to make them real.</p></div><div className="en-service-list en-service-list-dark">{marketEntryServices.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
       <section className="en-detail-split en-detail-reverse"><div className="en-detail-image"><img src="/assets/extracted/deck2-p14-01.jpg" alt="CAF Management office entrance in Casablanca" loading="lazy" /></div><div className="en-detail-copy"><p className="en-eyebrow">Based in Casablanca</p><h2>International perspective. Local execution.</h2><p>CAF has supported businesses across Africa, the MENA region and Europe. The team helps international decision-makers move from opportunity to a credible local operating model.</p><a className="en-text-link" href="/en/about">Meet the firm</a></div></section>
-      <section className="en-enquiry" id="market-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Market-entry enquiry</p><h2>Tell us what Morocco means for your business.</h2><p>Share the industry, intended activity, current stage and the decisions your team needs to make.</p></div><LeadPanel title="Discuss market entry" source="Market entry page" /></div></section>
+      <section className="en-enquiry" id="market-enquiry"><div className="shell en-enquiry-grid"><div><p className="en-eyebrow">Market-entry enquiry</p><h2>Tell us what Morocco means for your business.</h2><p>Share the industry, intended activity, current stage and the decisions your team needs to make.</p></div><LeadPanel title="Discuss market entry" /></div></section>
     </>
   );
 }
@@ -652,7 +607,7 @@ function ContactPage() {
     <section className="en-contact-page">
       <div className="shell en-contact-grid">
         <div><p className="en-eyebrow">Contact CAF Management</p><h1>Let’s discuss your project in Morocco.</h1><p>Tell us what you are planning, where the business stands today and what kind of support you need.</p><div className="en-contact-details"><span>+212 5 22 94 53 82 / 83 / 84</span><a href="mailto:info@caf.ma">info@caf.ma</a><a href="mailto:hiba@caf.ma">hiba@caf.ma</a><a href="https://www.linkedin.com/company/caf-management/" target="_blank" rel="noreferrer">LinkedIn · CAF Management</a><span>Hay Hana, rue Mhiwla n°17<br />20210 Casablanca, Morocco</span></div><img src="/assets/extracted/deck2-p14-01.jpg" alt="CAF Management office in Casablanca" /></div>
-        <LeadPanel title="Tell us about your project" source="English contact page" />
+        <LeadPanel title="Tell us about your project" />
       </div>
     </section>
   );

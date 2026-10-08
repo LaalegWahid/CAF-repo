@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EnglishSite } from "./EnglishSite.jsx";
-import { SERVICE_OPTIONS, submitLead } from "./leadForm.js";
+import { GOOGLE_FORM_URL } from "./googleForm.js";
 
 const steps = [
   ["01", "Votre projet", "Nous cadrons votre activité, vos associés et votre calendrier."],
@@ -33,28 +33,10 @@ function scrollToId(id) {
 function FrenchLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
 
   const navigate = (id) => {
     setMenuOpen(false);
     scrollToId(id);
-  };
-
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSending(true);
-    setError(false);
-    try {
-      await submitLead(event.currentTarget);
-      setSubmitted(true);
-    } catch {
-      setError(true);
-    } finally {
-      setSending(false);
-    }
   };
 
   return (
@@ -240,41 +222,13 @@ function FrenchLanding() {
           </div>
 
           <div className="form-card">
-            {submitted ? (
-              <div className="success-state" role="status">
-                <span>Demande reçue</span>
-                <h3>Merci pour votre confiance.</h3>
-                <p>L’équipe CAF reviendra vers vous pour comprendre votre projet et convenir de la prochaine étape.</p>
-                <button className="button button-navy" onClick={() => setSubmitted(false)}>Envoyer une autre demande</button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <input type="hidden" name="source" value="Site FR — création au Maroc" />
-                <div className="form-heading">
-                  <span>Premier échange</span>
-                  <h3>Présentez votre projet</h3>
-                </div>
-                <label>Nom et prénom<input name="name" required autoComplete="name" /></label>
-                <div className="field-row">
-                  <label>Email professionnel<input type="email" name="email" required autoComplete="email" /></label>
-                  <label>Téléphone<input type="tel" name="phone" autoComplete="tel" /></label>
-                </div>
-                <label>Service souhaité
-                  <select name="service" defaultValue="" required>
-                    <option value="" disabled>Sélectionnez un service</option>
-                    {SERVICE_OPTIONS.map(({ value }) => <option key={value} value={value}>{value}</option>)}
-                  </select>
-                </label>
-                <div className="field-row">
-                  <label>Pays d’activité<input name="country" required autoComplete="country-name" /></label>
-                  <label>Secteur d’activité<input name="sector" required /></label>
-                </div>
-                <label>Votre projet au Maroc<textarea name="message" rows="4" required /></label>
-                <button className="button button-cyan form-submit" type="submit" disabled={sending}>{sending ? "Envoi en cours…" : "Être recontacté"}</button>
-                {error && <p className="form-error" role="alert">L’envoi a échoué. Réessayez ou écrivez-nous à info@caf.ma.</p>}
-                <small>En envoyant ce formulaire, vous acceptez d’être recontacté par CAF Management.</small>
-              </form>
-            )}
+            <div className="form-heading">
+              <span>Premier échange</span>
+              <h3>Présentez votre projet en 2 minutes</h3>
+            </div>
+            <p className="form-cta-text">Quelques questions sur votre activité, votre pays et le service recherché. Un membre de l’équipe CAF vous recontacte pour organiser un premier échange.</p>
+            <a className="button button-cyan form-submit" href={GOOGLE_FORM_URL} target="_blank" rel="noopener">Remplir le formulaire</a>
+            <small>Le formulaire s’ouvre dans un nouvel onglet (Google Forms).</small>
           </div>
         </div>
       </section>
